@@ -1,19 +1,34 @@
 package org.itasyurt.karaf.core.characteristic.specification.atomic.combined;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 
 import org.itasyurt.karaf.core.characteristic.specification.atomic.CharacteristicSpecification;
 import org.itasyurt.karaf.core.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.core.characteristic.specification.atomic.SpecOption;
 
+@Entity
 public class CombinedCharacteristicSpecification extends CharacteristicSpecification {
 
+	@ManyToOne
 	private SelectionCharacteristicSpecification primary;
 
+	@ManyToOne
 	private SelectionCharacteristicSpecification secondary;
 
-	private Map<SpecOption, List<SpecOption>> relatedOptions;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn
+	@MapKey(name = "option")
+	private Map<SpecOption, SpecOptionRelatedOptions> relatedOptions = new HashMap<SpecOption,SpecOptionRelatedOptions>();
 
 	public SelectionCharacteristicSpecification getPrimary() {
 		return primary;
@@ -31,12 +46,6 @@ public class CombinedCharacteristicSpecification extends CharacteristicSpecifica
 		this.secondary = secondary;
 	}
 
-	public Map<SpecOption, List<SpecOption>> getRelatedOptions() {
-		return relatedOptions;
-	}
-
-	public void setRelatedOptions(Map<SpecOption, List<SpecOption>> relatedOptions) {
-		this.relatedOptions = relatedOptions;
-	}
+	
 
 }

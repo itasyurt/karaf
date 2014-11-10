@@ -1,17 +1,28 @@
 package org.itasyurt.karaf.core.characteristic.specification.conditional;
 
-import java.util.List;
 import java.util.Map;
 
-import org.itasyurt.karaf.core.characteristic.specification.atomic.AtomicCharacteristicSpecification;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
+
 import org.itasyurt.karaf.core.characteristic.specification.atomic.CharacteristicSpecification;
 import org.itasyurt.karaf.core.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.core.characteristic.specification.atomic.SpecOption;
 
+@Entity
 public class ConditionalCharacteristicSpecification extends CharacteristicSpecification {
 
+	@ManyToOne
 	private SelectionCharacteristicSpecification primary;
-	private Map<SpecOption, List<AtomicCharacteristicSpecification>> conditionalCharacteristics;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn
+	@MapKey(name = "primary")
+	private Map<SpecOption, SpecOptionConditionalRelation> conditionalCharacteristics;
 
 	public SelectionCharacteristicSpecification getPrimary() {
 		return primary;
@@ -21,14 +32,14 @@ public class ConditionalCharacteristicSpecification extends CharacteristicSpecif
 		this.primary = primary;
 	}
 
-	public Map<SpecOption, List<AtomicCharacteristicSpecification>> getConditionalCharacteristics() {
+	public Map<SpecOption, SpecOptionConditionalRelation> getConditionalCharacteristics() {
 		return conditionalCharacteristics;
 	}
 
-	public void setConditionalCharacteristics(Map<SpecOption, List<AtomicCharacteristicSpecification>> conditionalCharacteristics) {
+	public void setConditionalCharacteristics(Map<SpecOption, SpecOptionConditionalRelation> conditionalCharacteristics) {
 		this.conditionalCharacteristics = conditionalCharacteristics;
 	}
+
 	
-	
-	
+
 }

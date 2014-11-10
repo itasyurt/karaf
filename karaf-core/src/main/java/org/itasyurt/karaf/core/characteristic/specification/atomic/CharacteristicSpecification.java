@@ -1,10 +1,19 @@
 package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
+import javax.persistence.CascadeType;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+
+import org.itasyurt.karaf.core.entity.VersionedEntity;
 import org.itasyurt.karaf.core.text.Text;
 
-public abstract class CharacteristicSpecification {
+@MappedSuperclass
+public abstract class CharacteristicSpecification  extends VersionedEntity{
 
 	private String code;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Text name;
 
 	public String getCode() {

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       						http://www.springframework.org/schema/beans/spring-beans.xsd
+       						http://www.springframework.org/schema/context
+       						http://www.springframework.org/schema/context/spring-context.xsd
+       						
+                                http://www.springframework.org/schema/mvc
+                                http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                                http://www.springframework.org/schema/tx
+                                http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="populatormock, tr.com.t2.bss" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:global.${targetPlatform}.properties</value>
+
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- local db config -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emf" />
+	</bean>
+
+	<bean id="ds" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${local.db.driver}" />
+		<property name="jdbcUrl" value="${local.db.url}" />
+		<property name="user" value="${local.db.username}" />
+		<property name="password" value="${local.db.password}" />
+	</bean>
+	<bean id="emf"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="localDB" />
+		<property name="dataSource" ref="ds" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="persistenceUnitPostProcessors">
+			<list>
+				<bean class="org.itasyurt.karaf.util.PersistenceUnitPostProcessorImpl">
+
+					<property name="packagesToScan">
+						<list>
+							<value>org.itasyurt.karaf</value>
+						</list>
+					</property>
+
+				</bean>
+			</list>
+		</property>
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="eclipselink.weaving" value="false" />
+				<entry key="eclipselink.ddl-generation" value="${local.db.ddl}" />
+				<entry key="eclipselink.ddl-generation.output-mode" value="database" />
+				<entry key="eclipselink.deploy-on-startup" value="true" />
+
+
+			</map>
+		</property>
+
+	</bean>
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+		<property name="databasePlatform" value="${local.db.platform}" />
+		<property name="showSql" value="${local.db.showSQL}" />
+		<property name="generateDdl" value="${local.db.generateDDL}" />
+	</bean>
+
+
+
+
+</beans>

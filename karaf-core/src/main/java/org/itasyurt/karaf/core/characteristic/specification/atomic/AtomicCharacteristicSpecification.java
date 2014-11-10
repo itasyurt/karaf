@@ -1,5 +1,11 @@
 package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
-public class AtomicCharacteristicSpecification extends CharacteristicSpecification {
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class AtomicCharacteristicSpecification extends CharacteristicSpecification {
 
 }

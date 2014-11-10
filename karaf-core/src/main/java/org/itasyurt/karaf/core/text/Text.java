@@ -1,6 +1,11 @@
 package org.itasyurt.karaf.core.text;
 
-public class Text {
+import javax.persistence.Entity;
+
+import org.itasyurt.karaf.core.entity.BaseEntity;
+
+@Entity
+public class Text  extends BaseEntity{
 
 	private String text;
 
@@ -11,6 +16,5 @@ public class Text {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
-	
+
 }

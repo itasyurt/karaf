@@ -1,11 +1,18 @@
 package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+import org.itasyurt.karaf.core.entity.VersionedEntity;
 import org.itasyurt.karaf.core.text.Text;
 
-public class SpecOption {
+@Entity
+public class SpecOption extends VersionedEntity {
 
 	private String code;
 
+	@OneToOne(cascade = CascadeType.ALL)
 	private Text name;
 
 	public String getCode() {
@@ -23,6 +30,5 @@ public class SpecOption {
 	public void setName(Text name) {
 		this.name = name;
 	}
-	
-	
+
 }
