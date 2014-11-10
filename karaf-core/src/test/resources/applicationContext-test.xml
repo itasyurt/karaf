@@ -48,7 +48,7 @@
 		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
 		<property name="persistenceUnitPostProcessors">
 			<list>
-				<bean class="org.itasyurt.karaf.util.PersistenceUnitPostProcessorImpl">
+				<bean class="org.itasyurt.util.PersistenceUnitPostProcessorImpl">
 
 					<property name="packagesToScan">
 						<list>
