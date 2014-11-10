@@ -2,7 +2,7 @@ package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
 import java.util.Date;
 
-public class DateCharacteristicSpecification {
+public class DateCharacteristicSpecification extends AtomicCharacteristicSpecification {
 
 	private Date minDate;
 	

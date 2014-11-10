@@ -2,7 +2,7 @@ package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
 import java.util.List;
 
-public class SelectionCharacteristicSpecification {
+public class SelectionCharacteristicSpecification  extends AtomicCharacteristicSpecification{
 
 	private List<SpecOption> options;
 

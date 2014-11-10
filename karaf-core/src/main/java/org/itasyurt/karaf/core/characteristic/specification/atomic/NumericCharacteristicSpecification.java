@@ -2,7 +2,7 @@ package org.itasyurt.karaf.core.characteristic.specification.atomic;
 
 import java.math.BigDecimal;
 
-public class NumericCharacteristicSpecification {
+public class NumericCharacteristicSpecification  extends AtomicCharacteristicSpecification{
 
 	private BigDecimal min;
 
