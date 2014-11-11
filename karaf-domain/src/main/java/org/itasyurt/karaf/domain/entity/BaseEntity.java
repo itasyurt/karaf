@@ -1,17 +1,20 @@
 package org.itasyurt.karaf.domain.entity;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.eclipse.persistence.platform.database.MySQLPlatform;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
 @MappedSuperclass
+@UuidGenerator(name="ID_GEN")
 public abstract class BaseEntity {
 
 	@Id
+	@GeneratedValue(generator="ID_GEN")
 	private String id;
 
 	@Version
