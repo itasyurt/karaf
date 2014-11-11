@@ -17,6 +17,14 @@ public class EqualsAndHashCodeTest {
 		acs2.setCode("c1");
 		Assert.assertTrue(acs1.equals(acs2));
 		Assert.assertTrue(acs2.equals(acs1));
+		
+		acs1.setCode(null);
+		acs2.setCode(null);
+		
+		Assert.assertTrue(acs1.equals(acs2));
+		Assert.assertTrue(acs2.equals(acs1));
+		
+		
 
 	}
 
