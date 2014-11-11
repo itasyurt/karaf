@@ -65,4 +65,21 @@ public class CommonJpaDaoTest {
 		BooleanCharacteristicSpecification retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
 		Assert.isTrue(bcs.equals(retrieved));
 	}
+
+	@Test
+	@Transactional
+	public void entitySavedUpdatedAndFoundSuccessfully() {
+
+		BooleanCharacteristicSpecification bcs = new BooleanCharacteristicSpecification();
+		bcs.setCode("c1");
+		bcs = dao.save(bcs);
+
+		BooleanCharacteristicSpecification retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
+		Assert.isTrue(retrieved.getCode().equals("c1"));
+		bcs.setCode("c2");
+		dao.update(bcs);
+
+		retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
+		Assert.isTrue(retrieved.getCode().equals("c2"));
+	}
 }

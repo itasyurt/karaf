@@ -20,6 +20,7 @@ public class CommonJpaDao implements CommonDao {
 	public <T> T save(T entity) {
 
 		entityManager.persist(entity);
+		entityManager.flush();
 		return entity;
 	}
 
@@ -41,6 +42,13 @@ public class CommonJpaDao implements CommonDao {
 	public <T> T find(Class<T> clazz, String id) {
 
 		return entityManager.find(clazz, id);
+
+	}
+
+	public <T> T update(T entity) {
+		T result = entityManager.merge(entity);
+		entityManager.flush();
+		return result;
 
 	}
 }

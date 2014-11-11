@@ -5,6 +5,8 @@ import java.util.List;
 public interface CommonDao {
 
 	<T> T save(T entity);
+	
+	<T> T update(T entity);
 
 	<T> List<T> getAll(Class<T> clazz);
 
