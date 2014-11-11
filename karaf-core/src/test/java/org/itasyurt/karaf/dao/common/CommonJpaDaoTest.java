@@ -1,7 +1,5 @@
 package org.itasyurt.karaf.dao.common;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.BooleanCharacteristicSpecification;
@@ -81,5 +79,24 @@ public class CommonJpaDaoTest {
 
 		retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
 		Assert.isTrue(retrieved.getCode().equals("c2"));
+	}
+	
+	
+	@Test
+	@Transactional
+	public void entitySavedAndDeletedSuccessfully() {
+
+		BooleanCharacteristicSpecification bcs = new BooleanCharacteristicSpecification();
+		bcs.setCode("c1");
+		bcs = dao.save(bcs);
+		
+
+		BooleanCharacteristicSpecification retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
+		Assert.notNull(retrieved);
+
+		dao.delete(BooleanCharacteristicSpecification.class, bcs.getId());
+
+		retrieved = dao.find(BooleanCharacteristicSpecification.class, bcs.getId());
+		Assert.isNull(retrieved);
 	}
 }

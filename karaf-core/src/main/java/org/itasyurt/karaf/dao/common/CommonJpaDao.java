@@ -51,4 +51,11 @@ public class CommonJpaDao implements CommonDao {
 		return result;
 
 	}
+
+	@Override
+	public <T> void delete(Class<T> clazz, String id) {
+		entityManager.remove(find(clazz, id));
+		entityManager.flush();
+
+	}
 }
