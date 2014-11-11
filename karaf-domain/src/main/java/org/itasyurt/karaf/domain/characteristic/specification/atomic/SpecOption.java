@@ -31,4 +31,16 @@ public class SpecOption extends VersionedEntity {
 		this.name = name;
 	}
 
+	@Override
+	protected Object[] equalsFields() {
+		// TODO Auto-generated method stub
+		return new Object[] { code };
+	}
+
+	@Override
+	protected Object[] hashCodeFields() {
+		// TODO Auto-generated method stub
+		return new Object[] { code };
+	}
+
 }

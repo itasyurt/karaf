@@ -18,11 +18,11 @@ public class SpecOptionConditionalRelation extends BaseEntity {
 
 	@ManyToOne
 	private SpecOption primary;
-	
-	@OneToMany(orphanRemoval=true, cascade=CascadeType.ALL)
+
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	@JoinColumn
-	@OrderColumn(name="ix")
-	private List<SpecOptionConditionalCharacteristic> conditionalCharacteristics= new ArrayList<SpecOptionConditionalCharacteristic>();
+	@OrderColumn(name = "ix")
+	private List<SpecOptionConditionalCharacteristic> conditionalCharacteristics = new ArrayList<SpecOptionConditionalCharacteristic>();
 
 	public SpecOption getPrimary() {
 		return primary;
@@ -38,7 +38,18 @@ public class SpecOptionConditionalRelation extends BaseEntity {
 
 	public void setConditionalCharacteristics(List<SpecOptionConditionalCharacteristic> conditionalCharacteristics) {
 		this.conditionalCharacteristics = conditionalCharacteristics;
-	} 
-	
-	
+	}
+
+	@Override
+	protected Object[] equalsFields() {
+		// TODO Auto-generated method stub
+		return new Object[] { primary, conditionalCharacteristics };
+	}
+
+	@Override
+	protected Object[] hashCodeFields() {
+
+		return new Object[] { primary, conditionalCharacteristics };
+	}
+
 }

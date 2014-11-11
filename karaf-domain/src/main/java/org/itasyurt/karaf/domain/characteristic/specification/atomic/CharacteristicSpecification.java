@@ -8,11 +8,10 @@ import org.itasyurt.karaf.domain.entity.VersionedEntity;
 import org.itasyurt.karaf.domain.text.Text;
 
 @MappedSuperclass
-public abstract class CharacteristicSpecification  extends VersionedEntity{
+public abstract class CharacteristicSpecification extends VersionedEntity {
 
 	private String code;
-	
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Text name;
 
@@ -30,6 +29,18 @@ public abstract class CharacteristicSpecification  extends VersionedEntity{
 
 	public void setName(Text name) {
 		this.name = name;
+	}
+
+	@Override
+	protected Object[] equalsFields() {
+		// TODO Auto-generated method stub
+		return new Object[]{code};
+	}
+
+	@Override
+	protected Object[] hashCodeFields() {
+		
+		return new Object[]{code};
 	}
 
 }

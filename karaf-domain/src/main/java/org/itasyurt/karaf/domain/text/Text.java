@@ -16,5 +16,14 @@ public class Text  extends BaseEntity{
 	public void setText(String text) {
 		this.text = text;
 	}
+	@Override
+	protected Object[] equalsFields() {
+		
+		return new Object[]{text};
+	}
+	@Override
+	protected Object[] hashCodeFields() {
+		return new Object[]{text};
+	}
 
 }

@@ -8,4 +8,5 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class AtomicCharacteristicSpecification extends CharacteristicSpecification {
 
+	
 }

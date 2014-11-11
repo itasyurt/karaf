@@ -20,4 +20,16 @@ public class SpecOptionConditionalCharacteristic extends BaseEntity {
 		this.characteristic = characteristic;
 	}
 
+	@Override
+	protected Object[] equalsFields() {
+		// TODO Auto-generated method stub
+		return new Object[]{characteristic};
+	}
+
+	@Override
+	protected Object[] hashCodeFields() {
+		
+		return new Object[]{characteristic};
+	}
+
 }

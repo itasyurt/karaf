@@ -82,5 +82,13 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Test Related Ends -->
+		
+		<!-- Utility Related -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		<!-- Utility Related Ends -->
+		</dependency>
 	</dependencies>
 </project>
