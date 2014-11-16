@@ -4,11 +4,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
+import org.itasyurt.karaf.domain.NamedEntity;
 import org.itasyurt.karaf.domain.entity.VersionedEntity;
 import org.itasyurt.karaf.domain.text.Text;
 
 @MappedSuperclass
-public abstract class CharacteristicSpecification extends VersionedEntity {
+public abstract class CharacteristicSpecification extends VersionedEntity implements NamedEntity {
 
 	private String code;
 
@@ -34,13 +35,20 @@ public abstract class CharacteristicSpecification extends VersionedEntity {
 	@Override
 	protected Object[] equalsFields() {
 		// TODO Auto-generated method stub
-		return new Object[]{code};
+		return new Object[] { code };
 	}
 
 	@Override
 	protected Object[] hashCodeFields() {
-		
-		return new Object[]{code};
+
+		return new Object[] { code };
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = new Text();
+		this.name.setText(name);
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package org.itasyurt.karaf.dao.common.characteristic.specification;
+package org.itasyurt.karaf.dao.characteristic.specification.atomic;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class SelectionCharacteristicSpecificationJpaDao extends BaseJpaDao<SelectionCharacteristicSpecification> implements SelectionCharacteristicSpecificationDao {
 
 	@Override
-	protected Root<SelectionCharacteristicSpecification> constructRoot(CriteriaQuery<SelectionCharacteristicSpecification> c) {
+	protected Root<SelectionCharacteristicSpecification> constructDeepRoot(CriteriaQuery<SelectionCharacteristicSpecification> c) {
 
 		Root<SelectionCharacteristicSpecification> root = c.from(clazz);
 		root.fetch(SelectionCharacteristicSpecification_.name, JoinType.LEFT);

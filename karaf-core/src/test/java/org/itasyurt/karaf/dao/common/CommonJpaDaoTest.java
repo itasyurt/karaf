@@ -2,6 +2,7 @@ package org.itasyurt.karaf.dao.common;
 
 import java.util.List;
 
+import org.itasyurt.karaf.dao.common.CommonDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.BooleanCharacteristicSpecification;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,6 @@
-package org.itasyurt.karaf.dao.common.characteristic.specification;
+package org.itasyurt.karaf.dao.characteristic.specification.atomic;
+
+import java.util.List;
 
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
@@ -23,6 +25,30 @@ public class SelectionCharacteristicSpecificationDaoTest {
 	@Test
 	@Transactional
 	public void savedAndFoundSuccessfully() {
+		SelectionCharacteristicSpecification scs = createSCS();
+		scs = dao.save(scs);
+
+		SelectionCharacteristicSpecification retrieved = dao.find(scs.getId());
+		Assert.notNull(retrieved);
+
+	}
+
+	@Test
+	@Transactional
+	public void savedAndListedSuccessfully() {
+		List<SelectionCharacteristicSpecification> l0 = dao.getAll();
+		SelectionCharacteristicSpecification scs = createSCS();
+		scs = dao.save(scs);
+
+		scs = createSCS();
+		scs = dao.save(scs);
+
+		List<SelectionCharacteristicSpecification> l1 = dao.getAll();
+		Assert.isTrue(2 == (l1.size() - l0.size()));
+
+	}
+
+	private SelectionCharacteristicSpecification createSCS() {
 		SelectionCharacteristicSpecification scs = new SelectionCharacteristicSpecification();
 		scs.setCode("code");
 		Text name = new Text();
@@ -35,11 +61,6 @@ public class SelectionCharacteristicSpecificationDaoTest {
 		so1Name.setText("so1Name");
 		so1.setName(so1Name);
 		scs.getOptions().add(so1);
-		scs = dao.save(scs);
-
-		SelectionCharacteristicSpecification retrieved = dao.find(scs.getId());
-		Assert.notNull(retrieved);
-		
-
+		return scs;
 	}
 }
