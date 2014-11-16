@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import org.itasyurt.karaf.domain.entity.BaseEntity;
 
 @Entity
-public class Text  extends BaseEntity{
+public class Text extends BaseEntity {
 
 	private String text;
 
@@ -16,14 +16,22 @@ public class Text  extends BaseEntity{
 	public void setText(String text) {
 		this.text = text;
 	}
+
 	@Override
 	protected Object[] equalsFields() {
-		
-		return new Object[]{text};
+
+		return new Object[] { text };
 	}
+
 	@Override
 	protected Object[] hashCodeFields() {
-		return new Object[]{text};
+		return new Object[] { text };
+	}
+
+	@Override
+	public String toString() {
+
+		return "" + getText();
 	}
 
 }

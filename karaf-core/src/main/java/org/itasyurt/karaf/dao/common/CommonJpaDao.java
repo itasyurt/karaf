@@ -29,7 +29,7 @@ public class CommonJpaDao implements CommonDao {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(clazz);
 		Root<T> from = q.from(clazz);
-		q.select(from);
+		q.select(from).distinct(true);
 		List<T> result = entityManager.createQuery(q).getResultList();
 		if (result == null) {
 			return new ArrayList<T>();

@@ -1,5 +1,6 @@
 package org.itasyurt.karaf.domain.characteristic.specification.conditional;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class ConditionalCharacteristicSpecification extends CharacteristicSpecif
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn
 	@MapKey(name = "primary")
-	private Map<SpecOption, SpecOptionConditionalRelation> conditionalCharacteristics;
+	private Map<SpecOption, SpecOptionConditionalRelation> conditionalCharacteristics = new HashMap<SpecOption, SpecOptionConditionalRelation>();
 
 	public SelectionCharacteristicSpecification getPrimary() {
 		return primary;
@@ -39,7 +40,5 @@ public class ConditionalCharacteristicSpecification extends CharacteristicSpecif
 	public void setConditionalCharacteristics(Map<SpecOption, SpecOptionConditionalRelation> conditionalCharacteristics) {
 		this.conditionalCharacteristics = conditionalCharacteristics;
 	}
-
-	
 
 }

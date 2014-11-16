@@ -1,12 +1,15 @@
 package org.itasyurt.karaf.dao.characteristic.specification.atomic;
 
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import org.itasyurt.karaf.dao.FetchUtils;
 import org.itasyurt.karaf.dao.common.BaseJpaDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification_;
+import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption_;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +21,8 @@ public class SelectionCharacteristicSpecificationJpaDao extends BaseJpaDao<Selec
 
 		Root<SelectionCharacteristicSpecification> root = c.from(clazz);
 		root.fetch(SelectionCharacteristicSpecification_.name, JoinType.LEFT);
-		root.fetch(SelectionCharacteristicSpecification_.options, JoinType.LEFT).fetch(SpecOption_.name, JoinType.LEFT);
+		Fetch<SelectionCharacteristicSpecification, SpecOption> specOptionFetch = root.fetch(SelectionCharacteristicSpecification_.options, JoinType.LEFT);
+		FetchUtils.specOptionFetch(specOptionFetch);
 		return root;
 	}
-
 }

@@ -54,7 +54,7 @@ public abstract class BaseJpaDao<T extends BaseEntity> implements BaseDao<T> {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> c = cb.createQuery(clazz);
 		Root<T> root = constructDeepRoot(c);
-		c.select(root);
+		c.select(root).distinct(true);
 		return entityManager.createQuery(c).getResultList();
 	}
 
@@ -63,7 +63,7 @@ public abstract class BaseJpaDao<T extends BaseEntity> implements BaseDao<T> {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> c = cb.createQuery(clazz);
 		Root<T> root = constructDeepRoot(c);
-		c.select(root);
+		c.select(root).distinct(true);
 		c.where(cb.equal(root.get(BaseEntity_.id), id));
 
 		return entityManager.createQuery(c).getSingleResult();

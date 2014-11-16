@@ -24,6 +24,24 @@ public class SpecOptionCombinedRelation extends BaseEntity {
 	@OrderColumn(name = "ix")
 	private List<SpecOptionRelatedOptions> relatedOptions = new ArrayList<SpecOptionRelatedOptions>();
 
+	
+	
+	public SpecOption getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(SpecOption primary) {
+		this.primary = primary;
+	}
+
+	public List<SpecOptionRelatedOptions> getRelatedOptions() {
+		return relatedOptions;
+	}
+
+	public void setRelatedOptions(List<SpecOptionRelatedOptions> relatedOptions) {
+		this.relatedOptions = relatedOptions;
+	}
+
 	@Override
 	protected Object[] equalsFields() {
 	

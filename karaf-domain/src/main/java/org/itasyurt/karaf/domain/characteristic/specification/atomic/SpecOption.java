@@ -4,11 +4,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
+import org.itasyurt.karaf.domain.NamedEntity;
 import org.itasyurt.karaf.domain.entity.VersionedEntity;
 import org.itasyurt.karaf.domain.text.Text;
 
 @Entity
-public class SpecOption extends VersionedEntity {
+public class SpecOption extends VersionedEntity implements NamedEntity {
 
 	private String code;
 
@@ -41,6 +42,18 @@ public class SpecOption extends VersionedEntity {
 	protected Object[] hashCodeFields() {
 		// TODO Auto-generated method stub
 		return new Object[] { code };
+	}
+
+	@Override
+	public void setName(String name) {
+
+		this.name = new Text();
+		this.name.setText(name);
+
+	}
+	@Override
+	public String toString() {
+	 return  code;
 	}
 
 }
