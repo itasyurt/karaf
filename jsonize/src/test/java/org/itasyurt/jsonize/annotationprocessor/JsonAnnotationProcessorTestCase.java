@@ -1,7 +1,7 @@
 package org.itasyurt.jsonize.annotationprocessor;
 
 import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
-import org.itasyurt.jsonize.domain.Country;
+import org.itasyurt.jsonize.domain.Match;
 import org.junit.Test;
 
 public class JsonAnnotationProcessorTestCase {
@@ -11,6 +11,6 @@ public class JsonAnnotationProcessorTestCase {
 
 		JsonAnnotationProcessor processor= new JsonAnnotationProcessor();
 		
-		processor.printAnnotations(new Country());
+		processor.printDetailJsonTree(Match.class);
 	}
 }

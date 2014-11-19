@@ -1,12 +1,14 @@
 package org.itasyurt.jsonize.domain;
 
-public class Stadium {
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
-	private String id;
-	private String name;
+public class Stadium extends BaseEntity {
+
+	@JsonSummary
 	private City city;
+	@JsonDetail
 	private Address address;
-	
 
 	public String getId() {
 		return id;
@@ -40,5 +42,4 @@ public class Stadium {
 		this.address = address;
 	}
 
-	
 }

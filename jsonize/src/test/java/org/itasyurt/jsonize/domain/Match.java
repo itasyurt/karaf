@@ -2,22 +2,22 @@ package org.itasyurt.jsonize.domain;
 
 import java.util.Date;
 
-public class Match {
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
-	private String id;
+public class Match extends BaseEntity {
+
+	@JsonSummary
 	private Date matchDate;
+
+	@JsonSummary
 	private Club homeTeam;
+	@JsonSummary
 	private Club awayTeam;
+	@JsonSummary
 	private Stadium stadium;
+	@JsonDetail
 	private MatchScore score;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public Date getMatchDate() {
 		return matchDate;
@@ -58,7 +58,5 @@ public class Match {
 	public void setScore(MatchScore score) {
 		this.score = score;
 	}
-	
-	
 
 }

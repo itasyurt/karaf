@@ -1,20 +1,14 @@
 package org.itasyurt.jsonize.domain;
 
-public class Address {
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
-	private String id;
+public class Address extends BaseEntity {
 
+	@JsonSummary
 	private String addressText;
 
+	@JsonSummary
 	private City city;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getAddressText() {
 		return addressText;

@@ -1,12 +1,12 @@
 package org.itasyurt.jsonize.domain;
 
-import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
 public class BaseEntity {
 
-	@JsonDetail
+	@JsonSummary
 	protected String id;
-	@JsonDetail
+	@JsonSummary
 	protected String name;
 	
 	public String getId() {

@@ -1,8 +1,12 @@
 package org.itasyurt.jsonize.domain;
 
+import org.itasyurt.jsonize.annotations.JsonSummary;
+
 public class GoalInfo {
 
+	@JsonSummary
 	private  Person player;
+	@JsonSummary
 	private Integer minute;
 	public Person getPlayer() {
 		return player;
