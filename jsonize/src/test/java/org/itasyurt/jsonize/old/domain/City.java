@@ -1,13 +1,10 @@
-package org.itasyurt.jsonize.domain;
+package org.itasyurt.jsonize.old.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Person {
+public class City {
 
 	private String id;
 	private String name;
-
+	private String code;
 	private Country country;
 
 	public String getId() {
@@ -24,6 +21,14 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Country getCountry() {

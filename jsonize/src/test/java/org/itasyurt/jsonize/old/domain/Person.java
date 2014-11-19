@@ -1,4 +1,4 @@
-package org.itasyurt.jsonize.domain;
+package org.itasyurt.jsonize.old.domain;
 
 import java.util.ArrayList;
 import java.util.List;

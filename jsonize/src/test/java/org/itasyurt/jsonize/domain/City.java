@@ -1,27 +1,13 @@
 package org.itasyurt.jsonize.domain;
 
-public class City {
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
-	private String id;
-	private String name;
+public class City extends BaseEntity {
+
+	@JsonSummary
 	private String code;
-	private Person mayor;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	@JsonSummary
+	private Country country;
 
 	public String getCode() {
 		return code;
@@ -31,12 +17,12 @@ public class City {
 		this.code = code;
 	}
 
-	public Person getMayor() {
-		return mayor;
+	public Country getCountry() {
+		return country;
 	}
 
-	public void setMayor(Person mayor) {
-		this.mayor = mayor;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 }
