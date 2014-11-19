@@ -68,7 +68,7 @@ public class ConvertToPlainJson {
 		Map<String, Object> matchJson = processor.convertToDetailedJson(match);
 
 		Map<String, Object> convertedJson = processor.convertToDetailedJson(italy);
-		System.out.println(gson.toJson(convertedJson));
+		System.out.println(gson.toJson(matchJson));
 		// System.out.println(gson.toJson(match));
 
 	}
