@@ -1,4 +1,4 @@
-package org.itasyurt.jsonize.domain;
+package org.itasyurt.jsonize.domain.football;
 
 import java.util.List;
 

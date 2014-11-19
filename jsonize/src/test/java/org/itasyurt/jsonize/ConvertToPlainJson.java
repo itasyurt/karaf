@@ -7,15 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
-import org.itasyurt.jsonize.domain.Association;
-import org.itasyurt.jsonize.domain.City;
-import org.itasyurt.jsonize.domain.Club;
-import org.itasyurt.jsonize.domain.Country;
-import org.itasyurt.jsonize.domain.GoalInfo;
-import org.itasyurt.jsonize.domain.Match;
-import org.itasyurt.jsonize.domain.MatchScore;
-import org.itasyurt.jsonize.domain.Person;
-import org.itasyurt.jsonize.domain.Stadium;
+import org.itasyurt.jsonize.domain.football.Association;
+import org.itasyurt.jsonize.domain.football.City;
+import org.itasyurt.jsonize.domain.football.Club;
+import org.itasyurt.jsonize.domain.football.Country;
+import org.itasyurt.jsonize.domain.football.GoalInfo;
+import org.itasyurt.jsonize.domain.football.GoalKeeper;
+import org.itasyurt.jsonize.domain.football.Match;
+import org.itasyurt.jsonize.domain.football.MatchScore;
+import org.itasyurt.jsonize.domain.football.Person;
+import org.itasyurt.jsonize.domain.football.Stadium;
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -45,7 +46,7 @@ public class ConvertToPlainJson {
 
 		Person ronaldo = createPerson("id", "iniesta", portugal);
 		Person benzema = createPerson("id", "benzema", france);
-		Person casillas = createPerson("id", "casillas", spain);
+		Person casillas = createGoalKeeper("id", "casillas", spain);
 
 		Person luisEnrique = createPerson("id", "luisEnrique", spain);
 		Person ancelotti = createPerson("id", "ancelotti", italy);
@@ -67,7 +68,7 @@ public class ConvertToPlainJson {
 		JsonAnnotationProcessor processor = new JsonAnnotationProcessor();
 		Map<String, Object> matchJson = processor.convertToDetailedJson(match);
 
-		Map<String, Object> convertedJson = processor.convertToDetailedJson(italy);
+		Map<String, Object> convertedJson = processor.convertToDetailedJson(realMadrid);
 		System.out.println(gson.toJson(convertedJson));
 		// System.out.println(gson.toJson(match));
 
@@ -112,6 +113,15 @@ public class ConvertToPlainJson {
 	private Person createPerson(String id, String name, Country country) {
 
 		Person result = new Person();
+		result.setId(id);
+		result.setName(name);
+		result.setCountry(country);
+		return result;
+	}
+
+	private GoalKeeper createGoalKeeper(String id, String name, Country country) {
+
+		GoalKeeper result = new GoalKeeper();
 		result.setId(id);
 		result.setName(name);
 		result.setCountry(country);

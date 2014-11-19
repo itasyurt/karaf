@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
 import org.itasyurt.jsonize.anottationprocessor.JsonTree;
-import org.itasyurt.jsonize.domain.Match;
+import org.itasyurt.jsonize.domain.football.Match;
 import org.junit.Test;
 
 public class JsonAnnotationProcessorTestCase {
