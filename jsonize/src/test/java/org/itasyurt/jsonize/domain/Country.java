@@ -1,10 +1,10 @@
 package org.itasyurt.jsonize.domain;
 
-import org.itasyurt.jsonize.annotations.JsonSummary;
+import org.itasyurt.jsonize.annotations.JsonDetail;
 
 public class Country extends BaseEntity {
 
-	@JsonSummary
+	@JsonDetail
 	private Association association;
 
 	public Association getAssociation() {

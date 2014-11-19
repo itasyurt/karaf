@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
 import org.itasyurt.jsonize.domain.Association;
 import org.itasyurt.jsonize.domain.City;
 import org.itasyurt.jsonize.domain.Club;
@@ -34,7 +36,7 @@ public class ConvertToPlainJson {
 		Country portugal = createCountry("id", "portugal", uefa);
 		Country france = createCountry("id", "france", uefa);
 		Country italy = createCountry("id", "italy", uefa);
-		Country england = createCountry("id", "england", uefa);
+
 		Country southAfrica = createCountry("id", "southAfrica", caf);
 
 		Person messi = createPerson("id", "messi", argentina);
@@ -47,32 +49,38 @@ public class ConvertToPlainJson {
 
 		Person luisEnrique = createPerson("id", "luisEnrique", spain);
 		Person ancelotti = createPerson("id", "ancelotti", italy);
-		
+
 		Club barcelona = createClub("id", "barcelona", spain, luisEnrique, Arrays.asList(messi, iniesta, neymar));
 		Club realMadrid = createClub("id", "realMadrid", spain, ancelotti, Arrays.asList(ronaldo, benzema, casillas));
 
 		City johannesburg = createCity("id", "name", southAfrica);
 		Stadium soccerCity = createStadium("id", "soccerCity", johannesburg);
-		
+
 		MatchScore score = new MatchScore();
 		score.getHomeGoalInfo().add(createGoalInfo(messi, 36));
 		score.getHomeGoalInfo().add(createGoalInfo(messi, 73));
 		score.getAwayGoalInfo().add(createGoalInfo(ronaldo, 51));
-		
-		Match match = createMatch("id", new Date(), soccerCity, barcelona, realMadrid,score);
+
+		Match match = createMatch("id", new Date(), soccerCity, barcelona, realMadrid, score);
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		System.out.println(gson.toJson(match));
+		JsonAnnotationProcessor processor = new JsonAnnotationProcessor();
+		Map<String, Object> matchJson = processor.convertToDetailedJson(match);
+
+		Map<String, Object> convertedJson = processor.convertToDetailedJson(italy);
+		System.out.println(gson.toJson(convertedJson));
+		// System.out.println(gson.toJson(match));
 
 	}
 
 	private GoalInfo createGoalInfo(Person player, int minute) {
-		GoalInfo result= new GoalInfo();
+		GoalInfo result = new GoalInfo();
 		result.setPlayer(player);
 		result.setMinute(minute);
 		return result;
-	
+
 	}
+
 	private City createCity(String id, String name, Country country) {
 		City result = new City();
 		result.setId(id);
@@ -97,7 +105,7 @@ public class ConvertToPlainJson {
 		match.setHomeTeam(homeTeam);
 		match.setAwayTeam(awayTeam);
 		match.setScore(score);
-	
+
 		return match;
 	}
 

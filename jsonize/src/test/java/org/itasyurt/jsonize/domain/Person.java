@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
 public class Person extends BaseEntity {
 
-	@JsonDetail
+	@JsonSummary
 	private Country country;
 
 	public Country getCountry() {
