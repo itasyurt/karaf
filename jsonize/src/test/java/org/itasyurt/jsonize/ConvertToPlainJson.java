@@ -17,6 +17,7 @@ import org.itasyurt.jsonize.domain.football.Match;
 import org.itasyurt.jsonize.domain.football.MatchScore;
 import org.itasyurt.jsonize.domain.football.Person;
 import org.itasyurt.jsonize.domain.football.Stadium;
+import org.itasyurt.jsonize.serializer.JsonizeSerializer;
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -65,10 +66,10 @@ public class ConvertToPlainJson {
 		Match match = createMatch("id", new Date(), soccerCity, barcelona, realMadrid, score);
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		JsonAnnotationProcessor processor = new JsonAnnotationProcessor();
-		Map<String, Object> matchJson = processor.convertToDetailedJson(match);
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> matchJson = serializer.convertToDetailedJson(match);
 
-		Map<String, Object> convertedJson = processor.convertToDetailedJson(realMadrid);
+		Map<String, Object> convertedJson = serializer.convertToDetailedJson(realMadrid);
 		System.out.println(gson.toJson(convertedJson));
 		// System.out.println(gson.toJson(match));
 

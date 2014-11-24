@@ -8,6 +8,7 @@ import org.itasyurt.jsonize.domain.football.Match;
 import org.itasyurt.jsonize.domain.university.Student;
 import org.itasyurt.jsonize.domain.university.Thesis;
 import org.itasyurt.jsonize.domain.university.University;
+import org.itasyurt.jsonize.serializer.JsonizeSerializer;
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -39,8 +40,8 @@ public class ConvertMapToJson {
 		university.getThesesMap().put(avarel, tAvarel);
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		JsonAnnotationProcessor processor = new JsonAnnotationProcessor();
-		Map<String, Object> uniJson = processor.convertToDetailedJson(university);
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> uniJson = serializer.convertToDetailedJson(university);
 		System.out.println(gson.toJson(uniJson));
 
 	}
