@@ -2,41 +2,15 @@ package org.itasyurt.jsonize.anottationprocessor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.itasyurt.jsonize.annotations.JsonDetail;
-import org.itasyurt.jsonize.annotations.JsonSubtype;
 import org.itasyurt.jsonize.annotations.JsonSummary;
 
 public class JsonAnnotationProcessor {
-
-	private static Set<Class<?>> wrapperTypes = new HashSet<Class<?>>();
-
-	static {
-		wrapperTypes.add(Boolean.class);
-		wrapperTypes.add(Character.class);
-		wrapperTypes.add(Byte.class);
-		wrapperTypes.add(Short.class);
-		wrapperTypes.add(Integer.class);
-		wrapperTypes.add(Long.class);
-		wrapperTypes.add(Float.class);
-		wrapperTypes.add(Double.class);
-		wrapperTypes.add(Void.class);
-		wrapperTypes.add(String.class);
-		wrapperTypes.add(Enum.class);
-		wrapperTypes.add(Date.class);
-		wrapperTypes.add(BigDecimal.class);
-	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Field> getAnnotatedFields(Class objectClass, Class annotation) {
@@ -112,7 +86,7 @@ public class JsonAnnotationProcessor {
 
 			} else if (Map.class.isAssignableFrom(f.getType())) {
 				ParameterizedType genericType = (ParameterizedType) f.getGenericType();
-				Class keyType = (Class) genericType.getActualTypeArguments()[1];
+				Class keyType = (Class) genericType.getActualTypeArguments()[0];
 				if (!isPrimitive(keyType)) {
 					child.setKeyComplex(true);
 				}
@@ -132,7 +106,7 @@ public class JsonAnnotationProcessor {
 
 	public static boolean isPrimitive(Class clazz) {
 
-		return wrapperTypes.contains(clazz);
+		return JsonizePrimitives.isPrimitive(clazz);
 	}
 
 }

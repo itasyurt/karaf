@@ -3,6 +3,7 @@ package org.itasyurt.karaf.domain.characteristic.specification.conditional;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.itasyurt.jsonize.annotations.JsonSummary;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.AtomicCharacteristicSpecification;
 import org.itasyurt.karaf.domain.entity.BaseEntity;
 
@@ -10,6 +11,7 @@ import org.itasyurt.karaf.domain.entity.BaseEntity;
 public class SpecOptionConditionalCharacteristic extends BaseEntity {
 
 	@ManyToOne
+	@JsonSummary
 	private AtomicCharacteristicSpecification characteristic;
 
 	public AtomicCharacteristicSpecification getCharacteristic() {

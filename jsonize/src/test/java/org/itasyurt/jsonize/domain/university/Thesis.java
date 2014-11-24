@@ -1,8 +1,9 @@
 package org.itasyurt.jsonize.domain.university;
 
 import org.itasyurt.jsonize.annotations.JsonSummary;
+import org.itasyurt.jsonize.map.KeyContainer;
 
-public class Thesis {
+public class Thesis implements KeyContainer {
 
 	@JsonSummary
 	private String title;
@@ -24,6 +25,11 @@ public class Thesis {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public Object getKey() {
+
+		return student;
 	}
 
 }

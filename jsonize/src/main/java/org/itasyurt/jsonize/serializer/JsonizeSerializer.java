@@ -1,13 +1,10 @@
 package org.itasyurt.jsonize.serializer;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -18,6 +15,8 @@ import org.itasyurt.jsonize.anottationprocessor.JsonTree;
 public class JsonizeSerializer {
 	
 	private static final String CLASS_NAME = "@class";
+	
+	private  JsonAnnotationProcessor annotationProcessor = new  JsonAnnotationProcessor();
 
 	
 
@@ -38,7 +37,8 @@ public class JsonizeSerializer {
 
 	private JsonTree getDetailedJsonTree(Class<? extends Object> class1) {
 		
-		return new  JsonAnnotationProcessor().getDetailedJsonTree(class1);
+		
+		return annotationProcessor.getDetailedJsonTree(class1);
 	}
 	
 

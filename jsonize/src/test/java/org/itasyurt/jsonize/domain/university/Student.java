@@ -2,8 +2,9 @@ package org.itasyurt.jsonize.domain.university;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
 import org.itasyurt.jsonize.annotations.JsonSummary;
+import org.itasyurt.jsonize.map.KeyContainer;
 
-public class Student {
+public class Student   {
 
 	@JsonSummary
 	private String studentNumber;
