@@ -4,11 +4,17 @@ import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSubtype;
+
 @Entity
+@JsonSubtype
 public class NumericCharacteristicSpecification  extends AtomicCharacteristicSpecification{
 
+	@JsonDetail
 	private BigDecimal min;
 
+	@JsonDetail
 	private BigDecimal max;
 
 	public BigDecimal getMin() {

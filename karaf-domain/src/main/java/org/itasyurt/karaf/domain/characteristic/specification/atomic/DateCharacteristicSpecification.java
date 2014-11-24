@@ -7,14 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSubtype;
+
 @Entity
 @DiscriminatorValue("DCS")
+@JsonSubtype
 public class DateCharacteristicSpecification extends AtomicCharacteristicSpecification {
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonDetail
 	private Date minDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonDetail
 	private Date maxDate;
 
 	public Date getMinDate() {

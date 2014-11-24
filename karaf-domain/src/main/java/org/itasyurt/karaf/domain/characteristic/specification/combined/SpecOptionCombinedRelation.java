@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.entity.BaseEntity;
 
@@ -17,11 +19,13 @@ import org.itasyurt.karaf.domain.entity.BaseEntity;
 public class SpecOptionCombinedRelation extends BaseEntity {
 
 	@ManyToOne
+	@JsonSummary
 	private SpecOption primary;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn
 	@OrderColumn(name = "ix")
+	@JsonDetail
 	private List<SpecOptionRelatedOptions> relatedOptions = new ArrayList<SpecOptionRelatedOptions>();
 
 	

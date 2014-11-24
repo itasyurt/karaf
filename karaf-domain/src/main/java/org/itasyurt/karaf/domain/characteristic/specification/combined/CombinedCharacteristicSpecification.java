@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 
+import org.itasyurt.jsonize.annotations.JsonDetail;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.CharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
@@ -18,14 +20,17 @@ import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 public class CombinedCharacteristicSpecification extends CharacteristicSpecification {
 
 	@ManyToOne
+	@JsonSummary
 	private SelectionCharacteristicSpecification primary;
 
 	@ManyToOne
+	@JsonSummary
 	private SelectionCharacteristicSpecification secondary;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn
 	@MapKey(name = "primary")
+	@JsonDetail
 	private Map<SpecOption, SpecOptionCombinedRelation> relatedOptions = new HashMap<SpecOption,SpecOptionCombinedRelation>();
 
 	public SelectionCharacteristicSpecification getPrimary() {

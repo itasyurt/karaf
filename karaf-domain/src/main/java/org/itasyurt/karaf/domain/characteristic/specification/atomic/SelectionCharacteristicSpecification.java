@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
+import org.itasyurt.jsonize.annotations.JsonDetail;
+
 @Entity
 @DiscriminatorValue("SCS")
 public class SelectionCharacteristicSpecification extends AtomicCharacteristicSpecification {
@@ -17,6 +19,7 @@ public class SelectionCharacteristicSpecification extends AtomicCharacteristicSp
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn
 	@OrderColumn(name = "ix")
+	@JsonDetail
 	private List<SpecOption> options = new ArrayList<SpecOption>();
 
 	public List<SpecOption> getOptions() {

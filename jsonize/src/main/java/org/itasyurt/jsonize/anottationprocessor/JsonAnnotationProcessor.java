@@ -2,6 +2,7 @@ package org.itasyurt.jsonize.anottationprocessor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +35,7 @@ public class JsonAnnotationProcessor {
 		wrapperTypes.add(String.class);
 		wrapperTypes.add(Enum.class);
 		wrapperTypes.add(Date.class);
+		wrapperTypes.add(BigDecimal.class);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -8,6 +8,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.eclipse.persistence.annotations.UuidGenerator;
+import org.itasyurt.jsonize.annotations.JsonSummary;
 
 @MappedSuperclass
 @UuidGenerator(name="ID_GEN")
@@ -15,6 +16,7 @@ public abstract class BaseEntity {
 
 	@Id
 	@GeneratedValue(generator="ID_GEN")
+	@JsonSummary
 	private String id;
 
 	@Version
