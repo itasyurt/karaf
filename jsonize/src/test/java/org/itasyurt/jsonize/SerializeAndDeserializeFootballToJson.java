@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.itasyurt.jsonize.domain.football.Association;
 import org.itasyurt.jsonize.domain.football.City;
@@ -18,6 +17,7 @@ import org.itasyurt.jsonize.domain.football.Match;
 import org.itasyurt.jsonize.domain.football.MatchScore;
 import org.itasyurt.jsonize.domain.football.Person;
 import org.itasyurt.jsonize.domain.football.Stadium;
+import org.itasyurt.jsonize.domain.football.TransferList;
 import org.itasyurt.jsonize.serializer.JsonizeDeserializer;
 import org.itasyurt.jsonize.serializer.JsonizeSerializer;
 import org.junit.Test;
@@ -27,10 +27,64 @@ import com.google.gson.GsonBuilder;
 
 public class SerializeAndDeserializeFootballToJson {
 
-	@Test
-	public void convertToPlainJson() {
+	FootballObjectRepository repository = new FootballObjectRepository();
 
-		FootballObjectRepository repository = new FootballObjectRepository();
+	@Test
+	public void convertToJsonAndDeserialize() {
+
+		createDomainObjects();
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> matchJson = serializer.convertToDetailedJson(repository.find(Match.class, "elclassico"));
+
+		Map<String, Object> barcelonaJson = serializer.convertToDetailedJson(repository.find(Club.class, "barcelona"));
+		String jsonString = gson.toJson(barcelonaJson);
+		Map fromJson = gson.fromJson(jsonString, Map.class);
+		System.out.println(fromJson);
+		JsonizeDeserializer deserializer = new JsonizeDeserializer();
+		deserializer.setRepository(repository);
+
+		Club deserializedBarcelona = deserializer.convertFromJson(Club.class, fromJson);
+
+		Map<String, Object> realMadridJson = serializer.convertToDetailedJson(repository.find(Club.class, "realMadrid"));
+		jsonString = gson.toJson(realMadridJson);
+		fromJson = gson.fromJson(jsonString, Map.class);
+		System.out.println(fromJson);
+
+		Club deserializedRealMadrid = deserializer.convertFromJson(Club.class, fromJson);
+		System.out.println(deserializedRealMadrid.getName());
+
+	}
+
+	@Test
+	public void serializeAndDeserializeWithSummaryLists() {
+		createDomainObjects();
+		TransferList transferList = new TransferList();
+		transferList.setId("tl1");
+		transferList.setName("tl1");
+		transferList.getPlayers().add(repository.find(GoalKeeper.class, "casillas"));
+		transferList.getPlayers().add(repository.find(Person.class, "messi"));
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> converted = serializer.convertToDetailedJson(transferList);
+
+		String jsonString = gson.toJson(converted);
+		Map fromJson = gson.fromJson(jsonString, Map.class);
+		System.out.println(fromJson);
+		JsonizeDeserializer deserializer = new JsonizeDeserializer();
+		deserializer.setRepository(repository);
+
+		TransferList deserialized = deserializer.convertFromJson(TransferList.class, fromJson);
+
+		System.out.println(deserialized.getName());
+
+	}
+
+	private void createDomainObjects() {
+
+		repository = new FootballObjectRepository();
 		Association uefa = createAssociation("uefa", "uefa", 1954);
 
 		Association conmebol = createAssociation("conmebol", "conmebol", 1916);
@@ -60,7 +114,7 @@ public class SerializeAndDeserializeFootballToJson {
 		Person iniesta = createPerson("iniesta", "iniesta", spain);
 		Person neymar = createPerson("neymar", "neymar", brazil);
 
-		Person ronaldo = createPerson("iniesta", "iniesta", portugal);
+		Person ronaldo = createPerson("ronaldo", "ronaldo", portugal);
 		Person benzema = createPerson("benzema", "benzema", france);
 		Person casillas = createGoalKeeper("casillas", "casillas", spain);
 
@@ -92,30 +146,7 @@ public class SerializeAndDeserializeFootballToJson {
 		score.getAwayGoalInfo().add(createGoalInfo(ronaldo, 51));
 
 		Match match = createMatch("elclassico", new Date(), soccerCity, barcelona, realMadrid, score);
-
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		JsonizeSerializer serializer = new JsonizeSerializer();
-		Map<String, Object> matchJson = serializer.convertToDetailedJson(match);
-
-		Map<String, Object> convertedJson = serializer.convertToDetailedJson(realMadrid);
-		System.out.println(gson.toJson(convertedJson));
-
-		Map<String, Object> barcelonaJson = serializer.convertToDetailedJson(barcelona);
-		String jsonString = gson.toJson(barcelonaJson);
-		Map fromJson = gson.fromJson(jsonString, Map.class);
-		System.out.println(fromJson);
-		JsonizeDeserializer deserializer = new JsonizeDeserializer();
-		deserializer.setRepository(repository);
-
-		Club deserializedBarcelona = deserializer.convertFromJson(Club.class, fromJson);
-
-		Map<String, Object> realMadridJson = serializer.convertToDetailedJson(realMadrid);
-		jsonString = gson.toJson(realMadridJson);
-		fromJson = gson.fromJson(jsonString, Map.class);
-		System.out.println(fromJson);
-
-		Club deserializedRealMadrid = deserializer.convertFromJson(Club.class, fromJson);
-		System.out.println(deserializedRealMadrid.getName());
+		repository.put(match);
 
 	}
 
@@ -195,8 +226,8 @@ public class SerializeAndDeserializeFootballToJson {
 
 	private Association createAssociation(String id, String name, Integer foundationYear) {
 		Association result = new Association();
-		result.setId("id");
-		result.setName("name");
+		result.setId(id);
+		result.setName(name);
 		result.setFoundationYear(foundationYear);
 		return result;
 	}

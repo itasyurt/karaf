@@ -12,10 +12,25 @@ public class FootballObjectRepository implements ObjectRepository {
 	@SuppressWarnings("unchecked")
 	public <T> T find(Class<T> clazz, Object key) {
 
+		Object id = ((Map) key).get("id");
 		Map<Object, Object> classRepo = objectRepository.get(clazz);
 		if (classRepo != null) {
 
-			return (T) classRepo.get(key);
+			return (T) classRepo.get(id);
+		} else {
+			return null;
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T find(Class<T> clazz, String key) {
+
+		Object id = key;
+		Map<Object, Object> classRepo = objectRepository.get(clazz);
+		if (classRepo != null) {
+
+			return (T) classRepo.get(id);
 		} else {
 			return null;
 		}

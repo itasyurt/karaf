@@ -24,7 +24,7 @@ public class JsonizeDeserializer {
 	private JsonAnnotationProcessor annotationProcessor = new JsonAnnotationProcessor();
 
 	private AdapterRegistry adapterRegistry = new DefaultAdapterRegistry();
-	
+
 	private ObjectRepository repository;
 
 	public <T> T convertFromJson(Class<T> clazz, Map<String, Object> jsonMap) {
@@ -59,16 +59,28 @@ public class JsonizeDeserializer {
 
 	}
 
-	private void setFieldValue(JsonTree currentNode, Object currentJsonObject, Object resultObject) {
+	private Class determineObjectType(Class type, Map objectMap) {
+		if (objectMap.containsKey(CLASS_NAME)) {
+			try {
+				return Class.forName((String) objectMap.get(CLASS_NAME));
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return type;
+
+	}
+
+	private void setFieldValue(JsonTree currentNode, Object currentJsonObject, Object target) {
 
 		if (currentJsonObject != null) {
 			if (currentNode.isCollection()) {
-				deserializeList(currentNode, currentJsonObject, resultObject);
+				deserializeList(currentNode, currentJsonObject, target);
 			} else if (currentNode.isMap()) {
 				if (currentNode.isKeyComplex()) {
-					deserializeComplexKeyMap(currentNode, currentJsonObject, resultObject);
+					deserializeComplexKeyMap(currentNode, currentJsonObject, target);
 				} else {
-					deserializePrimitiveKeyMap(currentNode, currentJsonObject, resultObject);
+					deserializePrimitiveKeyMap(currentNode, currentJsonObject, target);
 
 				}
 
@@ -79,19 +91,33 @@ public class JsonizeDeserializer {
 					AbstractTypeAdapter<?> adapter = getAdapterRegistry().getTypeAdapter(fieldType);
 					Object value = adapter.convertToObject((String) currentJsonObject);
 
-					writeField(currentNode, resultObject, value);
+					writeField(currentNode, target, value);
 
 				} else {
 
 					Map objectMap = (Map) currentJsonObject;
-					Object value = objectMap.containsKey(CLASS_NAME) ? createNewInstance((String) objectMap.get(CLASS_NAME)) : createNewInstance(fieldType);
 
-					writeObject(currentNode, objectMap, value);
-					writeField(currentNode, resultObject, value);
+					Object value;
+					Class objectType = determineObjectType(fieldType, objectMap);
+					value = createNewOrFind(currentNode, objectMap, objectType);
+
+					writeField(currentNode, target, value);
 				}
 			}
 		}
 
+	}
+
+	private Object createNewOrFind(JsonTree currentNode, Map objectMap, Class objectType) {
+		Object value;
+		if (currentNode.isSummary()) {
+			value = getRepository().find(objectType, objectMap);
+		} else {
+			value = createNewInstance(objectType);
+
+			writeObject(currentNode, objectMap, value);
+		}
+		return value;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -105,11 +131,9 @@ public class JsonizeDeserializer {
 				Object objectValue = getAdapterRegistry().getTypeAdapter(objEntry.getClass()).convertToObject((String) objEntry);
 				resultList.add(objectValue);
 			} else {
-
 				Map objectMap = (Map) objEntry;
-				Object objectValue = objectMap.containsKey(CLASS_NAME) ? createNewInstance((String) objectMap.get(CLASS_NAME)) : createNewInstance(type);
-				
-				writeObject(currentNode, objectMap, objectValue);
+				Class objectType = determineObjectType(type, objectMap);
+				Object objectValue = createNewOrFind(currentNode, objectMap, objectType);
 				resultList.add(objectValue);
 			}
 
@@ -118,7 +142,6 @@ public class JsonizeDeserializer {
 
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	private void deserializeComplexKeyMap(JsonTree currentNode, Object currentJsonObject, Object target) {
 		ParameterizedType genericType = (ParameterizedType) currentNode.getField().getGenericType();
@@ -128,9 +151,9 @@ public class JsonizeDeserializer {
 		for (Object objEntry : listObject) {
 
 			Map objectMap = (Map) objEntry;
-			KeyContainer currentValue = (KeyContainer) (objectMap.containsKey(CLASS_NAME) ? createNewInstance((String) objectMap.get(CLASS_NAME)) : createNewInstance(valueType));
-			
-			writeObject(currentNode, objectMap, currentValue);
+			Class objectType = determineObjectType(valueType, objectMap);
+			KeyContainer currentValue = (KeyContainer) createNewOrFind(currentNode, objectMap, objectType);
+
 			Object objectKey = currentValue.getKey();
 			resultMap.put(objectKey, currentValue);
 		}
@@ -147,21 +170,24 @@ public class JsonizeDeserializer {
 		for (Object objEntry : mapObject.entrySet()) {
 			Entry entry = (Entry) objEntry;
 			Object objectKey = getAdapterRegistry().getTypeAdapter(entry.getKey().getClass()).convertToObject((String) entry.getKey());
-			Map objectMap = (Map) entry.getValue();
-			Object objectValue = objectMap.containsKey(CLASS_NAME) ? createNewInstance((String) objectMap.get(CLASS_NAME)) : createNewInstance(entry.getValue().getClass());
-			
+
 			if (!isPrimitive(entry.getValue().getClass())) {
+				Map objectMap = (Map) objEntry;
+				Class objectType = determineObjectType(valueType, objectMap);
+				Object objectValue = createNewOrFind(currentNode, objectMap, objectType);
 				writeObject(currentNode, objectMap, objectValue);
+				resultMap.put(objectKey, objectValue);
+			} else {
+				Object primitiveValue = getAdapterRegistry().getTypeAdapter(entry.getValue().getClass()).convertToObject((String) entry.getValue());
+				resultMap.put(objectKey, primitiveValue);
 			}
 
-			resultMap.put(objectKey, objectValue);
 		}
 		writeField(currentNode, target, resultMap);
 	}
 
 	private void writeObject(JsonTree currentNode, Map valueMap, Object target) {
 
-		
 		for (JsonTree child : currentNode.getChildren()) {
 			setFieldValue(child, valueMap.get(child.getField().getName()), target);
 
@@ -193,10 +219,9 @@ public class JsonizeDeserializer {
 	public void setRepository(ObjectRepository repository) {
 		this.repository = repository;
 	}
-	
+
 	protected ObjectRepository getRepository() {
 		return repository;
 	}
-	
-	
+
 }
