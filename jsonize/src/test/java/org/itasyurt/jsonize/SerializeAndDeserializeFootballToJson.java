@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.itasyurt.jsonize.domain.football.Association;
 import org.itasyurt.jsonize.domain.football.City;
 import org.itasyurt.jsonize.domain.football.Club;
 import org.itasyurt.jsonize.domain.football.Country;
+import org.itasyurt.jsonize.domain.football.FootballObjectRepository;
 import org.itasyurt.jsonize.domain.football.GoalInfo;
 import org.itasyurt.jsonize.domain.football.GoalKeeper;
 import org.itasyurt.jsonize.domain.football.Match;
@@ -28,42 +30,68 @@ public class SerializeAndDeserializeFootballToJson {
 	@Test
 	public void convertToPlainJson() {
 
-		Association uefa = createAssociation("id", "uefa", 1954);
-		Association conmebol = createAssociation("id", "conmebol", 1916);
-		Association caf = createAssociation("id", "conmebol", 1957);
+		FootballObjectRepository repository = new FootballObjectRepository();
+		Association uefa = createAssociation("uefa", "uefa", 1954);
 
-		Country argentina = createCountry("id", "argentina", conmebol);
-		Country brazil = createCountry("id", "brazil", conmebol);
-		Country spain = createCountry("id", "spain", uefa);
-		Country portugal = createCountry("id", "portugal", uefa);
-		Country france = createCountry("id", "france", uefa);
-		Country italy = createCountry("id", "italy", uefa);
+		Association conmebol = createAssociation("conmebol", "conmebol", 1916);
+		Association caf = createAssociation("caf", "caf", 1957);
+		repository.put(uefa);
+		repository.put(conmebol);
+		repository.put(caf);
 
-		Country southAfrica = createCountry("id", "southAfrica", caf);
+		Country argentina = createCountry("argentina", "argentina", conmebol);
+		Country brazil = createCountry("brazil", "brazil", conmebol);
+		Country spain = createCountry("spain", "spain", uefa);
+		Country portugal = createCountry("portugal", "portugal", uefa);
+		Country france = createCountry("france", "france", uefa);
+		Country italy = createCountry("italy", "italy", uefa);
 
-		Person messi = createPerson("id", "messi", argentina);
-		Person iniesta = createPerson("id", "iniesta", spain);
-		Person neymar = createPerson("id", "neymar", brazil);
+		repository.put(argentina);
+		repository.put(brazil);
+		repository.put(spain);
+		repository.put(portugal);
+		repository.put(france);
+		repository.put(italy);
 
-		Person ronaldo = createPerson("id", "iniesta", portugal);
-		Person benzema = createPerson("id", "benzema", france);
-		Person casillas = createGoalKeeper("id", "casillas", spain);
+		Country southAfrica = createCountry("southAfrica", "southAfrica", caf);
+		repository.put(southAfrica);
 
-		Person luisEnrique = createPerson("id", "luisEnrique", spain);
-		Person ancelotti = createPerson("id", "ancelotti", italy);
+		Person messi = createPerson("messi", "messi", argentina);
+		Person iniesta = createPerson("iniesta", "iniesta", spain);
+		Person neymar = createPerson("neymar", "neymar", brazil);
 
-		Club barcelona = createClub("id", "barcelona", spain, luisEnrique, Arrays.asList(messi, iniesta, neymar));
-		Club realMadrid = createClub("id", "realMadrid", spain, ancelotti, Arrays.asList(ronaldo, benzema, casillas));
+		Person ronaldo = createPerson("iniesta", "iniesta", portugal);
+		Person benzema = createPerson("benzema", "benzema", france);
+		Person casillas = createGoalKeeper("casillas", "casillas", spain);
 
-		City johannesburg = createCity("id", "name", southAfrica);
-		Stadium soccerCity = createStadium("id", "soccerCity", johannesburg);
+		Person luisEnrique = createPerson("luisEnrique", "luisEnrique", spain);
+		Person ancelotti = createPerson("ancelotti", "ancelotti", italy);
+
+		repository.put(messi);
+		repository.put(iniesta);
+		repository.put(neymar);
+
+		repository.put(ronaldo);
+		repository.put(benzema);
+		repository.put(casillas);
+
+		Club barcelona = createClub("barcelona", "barcelona", spain, luisEnrique, Arrays.asList(messi, iniesta, neymar));
+		Club realMadrid = createClub("realMadrid", "realMadrid", spain, ancelotti, Arrays.asList(ronaldo, benzema, casillas));
+
+		repository.put(realMadrid);
+		repository.put(barcelona);
+
+		City johannesburg = createCity("name", "name", southAfrica);
+		repository.put(johannesburg);
+		Stadium soccerCity = createStadium("soccerCity", "soccerCity", johannesburg);
+		repository.put(soccerCity);
 
 		MatchScore score = new MatchScore();
 		score.getHomeGoalInfo().add(createGoalInfo(messi, 36));
 		score.getHomeGoalInfo().add(createGoalInfo(messi, 73));
 		score.getAwayGoalInfo().add(createGoalInfo(ronaldo, 51));
 
-		Match match = createMatch("id", new Date(), soccerCity, barcelona, realMadrid, score);
+		Match match = createMatch("elclassico", new Date(), soccerCity, barcelona, realMadrid, score);
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonizeSerializer serializer = new JsonizeSerializer();
@@ -77,13 +105,15 @@ public class SerializeAndDeserializeFootballToJson {
 		Map fromJson = gson.fromJson(jsonString, Map.class);
 		System.out.println(fromJson);
 		JsonizeDeserializer deserializer = new JsonizeDeserializer();
+		deserializer.setRepository(repository);
+
 		Club deserializedBarcelona = deserializer.convertFromJson(Club.class, fromJson);
 
 		Map<String, Object> realMadridJson = serializer.convertToDetailedJson(realMadrid);
 		jsonString = gson.toJson(realMadridJson);
 		fromJson = gson.fromJson(jsonString, Map.class);
 		System.out.println(fromJson);
-		 deserializer = new JsonizeDeserializer();
+
 		Club deserializedRealMadrid = deserializer.convertFromJson(Club.class, fromJson);
 		System.out.println(deserializedRealMadrid.getName());
 

@@ -10,6 +10,7 @@ public class JsonTree {
 	private boolean isCollection;
 	private boolean isMap;
 	private boolean isKeyComplex;
+	private boolean isSummary= false;
 
 	private List<JsonTree> children = new ArrayList<JsonTree>();
 
@@ -57,6 +58,15 @@ public class JsonTree {
 	public void setKeyComplex(boolean isKeyComplex) {
 		this.isKeyComplex = isKeyComplex;
 	}
+
+	public boolean isSummary() {
+		return isSummary;
+	}
+
+	public void setSummary(boolean isSummary) {
+		this.isSummary = isSummary;
+	}
+	
 	
 	
 	

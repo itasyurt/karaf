@@ -15,6 +15,7 @@ import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
 import org.itasyurt.jsonize.anottationprocessor.JsonTree;
 import org.itasyurt.jsonize.anottationprocessor.JsonizePrimitives;
 import org.itasyurt.jsonize.map.KeyContainer;
+import org.itasyurt.jsonize.repository.ObjectRepository;
 
 public class JsonizeDeserializer {
 
@@ -23,6 +24,8 @@ public class JsonizeDeserializer {
 	private JsonAnnotationProcessor annotationProcessor = new JsonAnnotationProcessor();
 
 	private AdapterRegistry adapterRegistry = new DefaultAdapterRegistry();
+	
+	private ObjectRepository repository;
 
 	public <T> T convertFromJson(Class<T> clazz, Map<String, Object> jsonMap) {
 
@@ -158,6 +161,7 @@ public class JsonizeDeserializer {
 
 	private void writeObject(JsonTree currentNode, Map valueMap, Object target) {
 
+		
 		for (JsonTree child : currentNode.getChildren()) {
 			setFieldValue(child, valueMap.get(child.getField().getName()), target);
 
@@ -185,4 +189,14 @@ public class JsonizeDeserializer {
 	protected AdapterRegistry getAdapterRegistry() {
 		return adapterRegistry;
 	}
+
+	public void setRepository(ObjectRepository repository) {
+		this.repository = repository;
+	}
+	
+	protected ObjectRepository getRepository() {
+		return repository;
+	}
+	
+	
 }

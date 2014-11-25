@@ -62,7 +62,12 @@ public class JsonAnnotationProcessor {
 
 		List<JsonTree> result = new ArrayList<JsonTree>();
 
-		result.addAll(getJsonTree(objectClass, JsonSummary.class, false));
+		List<JsonTree> summaryNodes = getJsonTree(objectClass, JsonSummary.class, false);
+
+		for (JsonTree summaryNode : summaryNodes) {
+			summaryNode.setSummary(true);
+		}
+		result.addAll(summaryNodes);
 
 		if (detailed) {
 
