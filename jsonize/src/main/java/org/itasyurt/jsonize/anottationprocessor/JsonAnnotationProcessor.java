@@ -3,9 +3,9 @@ package org.itasyurt.jsonize.anottationprocessor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
 import org.itasyurt.jsonize.annotations.JsonSummary;
@@ -84,11 +84,15 @@ public class JsonAnnotationProcessor {
 
 			JsonTree child = new JsonTree(f);
 			Class fieldType;
-			if (Collection.class.isAssignableFrom(f.getType())) {
+			if (List.class.isAssignableFrom(f.getType())) {
 				ParameterizedType genericType = (ParameterizedType) f.getGenericType();
 				fieldType = (Class) genericType.getActualTypeArguments()[0];
-				child.setCollection(true);
+				child.setList(true);
 
+			} else if (Set.class.isAssignableFrom(f.getType())) {
+				ParameterizedType genericType = (ParameterizedType) f.getGenericType();
+				fieldType = (Class) genericType.getActualTypeArguments()[0];
+				child.setSet(true);
 			} else if (Map.class.isAssignableFrom(f.getType())) {
 				ParameterizedType genericType = (ParameterizedType) f.getGenericType();
 				Class keyType = (Class) genericType.getActualTypeArguments()[0];
@@ -102,6 +106,7 @@ public class JsonAnnotationProcessor {
 				fieldType = f.getType();
 			}
 			detailed = detailed && annotation.equals(JsonDetail.class);
+			child.setSummary(annotation.equals(JsonSummary.class));
 			child.getChildren().addAll(getDetailJsonChildren(fieldType, f, detailed));
 			result.add(child);
 

@@ -2,7 +2,9 @@ package org.itasyurt.jsonize.serializer;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -75,7 +77,7 @@ public class JsonizeDeserializer {
 
 		if (currentJsonObject != null) {
 			if (currentNode.isCollection()) {
-				deserializeList(currentNode, currentJsonObject, target);
+				deserializeCollection(currentNode, currentJsonObject, target);
 			} else if (currentNode.isMap()) {
 				if (currentNode.isKeyComplex()) {
 					deserializeComplexKeyMap(currentNode, currentJsonObject, target);
@@ -121,24 +123,24 @@ public class JsonizeDeserializer {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void deserializeList(JsonTree currentNode, Object currentJsonObject, Object target) {
+	private void deserializeCollection(JsonTree currentNode, Object currentJsonObject, Object target) {
 		ParameterizedType genericType = (ParameterizedType) currentNode.getField().getGenericType();
 		Class type = (Class) genericType.getActualTypeArguments()[0];
 		List listObject = (List) currentJsonObject;
-		List resultList = new ArrayList();
+		Collection resultCollection = currentNode.isList()?new ArrayList(): new HashSet();
 		for (Object objEntry : listObject) {
 			if (isPrimitive(type)) {
 				Object objectValue = getAdapterRegistry().getTypeAdapter(objEntry.getClass()).convertToObject((String) objEntry);
-				resultList.add(objectValue);
+				resultCollection.add(objectValue);
 			} else {
 				Map objectMap = (Map) objEntry;
 				Class objectType = determineObjectType(type, objectMap);
 				Object objectValue = createNewOrFind(currentNode, objectMap, objectType);
-				resultList.add(objectValue);
+				resultCollection.add(objectValue);
 			}
 
 		}
-		writeField(currentNode, target, resultList);
+		writeField(currentNode, target, resultCollection);
 
 	}
 

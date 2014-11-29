@@ -7,10 +7,12 @@ import java.util.List;
 public class JsonTree {
 
 	private Field field;
-	private boolean isCollection;
+
 	private boolean isMap;
+	private boolean isSet;
+	private boolean isList;
 	private boolean isKeyComplex;
-	private boolean isSummary= false;
+	private boolean isSummary = false;
 
 	private List<JsonTree> children = new ArrayList<JsonTree>();
 
@@ -33,14 +35,6 @@ public class JsonTree {
 
 	public Field getField() {
 		return field;
-	}
-
-	public boolean isCollection() {
-		return isCollection;
-	}
-
-	public void setCollection(boolean isCollection) {
-		this.isCollection = isCollection;
 	}
 
 	public boolean isMap() {
@@ -66,9 +60,25 @@ public class JsonTree {
 	public void setSummary(boolean isSummary) {
 		this.isSummary = isSummary;
 	}
-	
-	
-	
-	
+
+	public boolean isSet() {
+		return isSet;
+	}
+
+	public void setSet(boolean isSet) {
+		this.isSet = isSet;
+	}
+
+	public boolean isList() {
+		return isList;
+	}
+
+	public void setList(boolean isList) {
+		this.isList = isList;
+	}
+
+	public boolean isCollection() {
+		return isSet || isList;
+	}
 
 }

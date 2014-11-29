@@ -65,7 +65,7 @@ public class JsonizeSerializer {
 		
 		try {
 			if (child.isCollection()) {
-				convertListToJson(obj, result, child);
+				convertCollectionToJson(obj, result, child);
 			} else if (child.isMap()) {
 
 				convertMapToJson(obj, result, child);
@@ -90,7 +90,7 @@ public class JsonizeSerializer {
 		}
 	}
 
-	private void convertListToJson(Object obj, Map<String, Object> result, JsonTree child) throws IllegalAccessException {
+	private void convertCollectionToJson(Object obj, Map<String, Object> result, JsonTree child) throws IllegalAccessException {
 		Object collectionResult = FieldUtils.readField(obj, child.getField().getName(), true);
 		if (collectionResult != null) {
 			List collectionJson = new ArrayList();

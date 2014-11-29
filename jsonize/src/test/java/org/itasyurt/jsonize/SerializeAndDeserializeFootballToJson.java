@@ -17,6 +17,7 @@ import org.itasyurt.jsonize.domain.football.Match;
 import org.itasyurt.jsonize.domain.football.MatchScore;
 import org.itasyurt.jsonize.domain.football.Person;
 import org.itasyurt.jsonize.domain.football.Stadium;
+import org.itasyurt.jsonize.domain.football.Tournament;
 import org.itasyurt.jsonize.domain.football.TransferList;
 import org.itasyurt.jsonize.serializer.JsonizeDeserializer;
 import org.itasyurt.jsonize.serializer.JsonizeSerializer;
@@ -77,6 +78,30 @@ public class SerializeAndDeserializeFootballToJson {
 		deserializer.setRepository(repository);
 
 		TransferList deserialized = deserializer.convertFromJson(TransferList.class, fromJson);
+
+		System.out.println(deserialized.getName());
+
+	}
+
+	@Test
+	public void serializeAndDeserializeWithSummarySets() {
+		createDomainObjects();
+		Tournament t = new Tournament();
+		t.setName("t1");
+		t.getClubs().add(repository.find(Club.class, "barcelona"));
+		t.getClubs().add(repository.find(Club.class, "realMadrid"));
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> converted = serializer.convertToDetailedJson(t);
+
+		String jsonString = gson.toJson(converted);
+		Map fromJson = gson.fromJson(jsonString, Map.class);
+		System.out.println(fromJson);
+		JsonizeDeserializer deserializer = new JsonizeDeserializer();
+		deserializer.setRepository(repository);
+
+		Tournament deserialized = deserializer.convertFromJson(Tournament.class, fromJson);
 
 		System.out.println(deserialized.getName());
 
