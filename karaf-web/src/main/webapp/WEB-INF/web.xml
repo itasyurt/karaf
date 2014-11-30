@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>Karaf-Web</display-name>
+	<servlet>
+		<servlet-name>testservlet</servlet-name>
+		<servlet-class>org.itasyurt.karaf.web.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>testservlet</servlet-name>
+		<url-pattern>/test/*</url-pattern>
+	</servlet-mapping>
+
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+
+	<mime-mapping>
+		<extension>ttf</extension>
+		<mime-type>application/x-font-ttf</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>eot</extension>
+		<mime-type>application/vnd.ms-fontobject</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/x-font-woff</mime-type>
+	</mime-mapping>
+
+	<!-- Session timeout -->
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            /WEB-INF/applicationContext.xml
+        </param-value>
+	</context-param>
+	<welcome-file-list>
+		<welcome-file>hello.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>
