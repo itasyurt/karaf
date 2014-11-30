@@ -1,1 +1,9 @@
 /target/
+jsonize/.settings/org.eclipse.wst.common.component
+karaf-core/.settings/org.eclipse.wst.common.component
+karaf-domain/.settings/org.eclipse.wst.common.component
+karaf-web/.settings/.jsdtscope
+karaf-web/.settings/org.eclipse.wst.common.component
+karaf-web/.settings/org.eclipse.wst.jsdt.ui.superType.container
+karaf-web/.settings/org.eclipse.wst.jsdt.ui.superType.name
+util/.settings/org.eclipse.wst.common.component
