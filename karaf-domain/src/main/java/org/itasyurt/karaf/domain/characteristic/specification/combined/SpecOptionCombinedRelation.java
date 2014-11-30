@@ -12,11 +12,12 @@ import javax.persistence.OrderColumn;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
 import org.itasyurt.jsonize.annotations.JsonSummary;
+import org.itasyurt.jsonize.map.KeyContainer;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.entity.BaseEntity;
 
 @Entity
-public class SpecOptionCombinedRelation extends BaseEntity {
+public class SpecOptionCombinedRelation extends BaseEntity implements KeyContainer {
 
 	@ManyToOne
 	@JsonSummary
@@ -55,5 +56,11 @@ public class SpecOptionCombinedRelation extends BaseEntity {
 	@Override
 	protected Object[] hashCodeFields() {
 		return null;
+	}
+
+	@Override
+	public Object getKey() {
+		
+		return primary;
 	}
 }

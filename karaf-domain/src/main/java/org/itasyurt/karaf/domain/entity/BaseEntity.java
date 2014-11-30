@@ -11,15 +11,16 @@ import org.eclipse.persistence.annotations.UuidGenerator;
 import org.itasyurt.jsonize.annotations.JsonSummary;
 
 @MappedSuperclass
-@UuidGenerator(name="ID_GEN")
+@UuidGenerator(name = "ID_GEN")
 public abstract class BaseEntity {
 
 	@Id
-	@GeneratedValue(generator="ID_GEN")
+	@GeneratedValue(generator = "ID_GEN")
 	@JsonSummary
 	private String id;
 
 	@Version
+	@JsonSummary
 	private Integer version;
 
 	public String getId() {

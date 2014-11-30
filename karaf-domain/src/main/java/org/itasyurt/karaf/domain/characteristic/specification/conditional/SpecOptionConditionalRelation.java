@@ -12,11 +12,12 @@ import javax.persistence.OrderColumn;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
 import org.itasyurt.jsonize.annotations.JsonSummary;
+import org.itasyurt.jsonize.map.KeyContainer;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.entity.BaseEntity;
 
 @Entity
-public class SpecOptionConditionalRelation extends BaseEntity {
+public class SpecOptionConditionalRelation extends BaseEntity implements KeyContainer {
 
 	@ManyToOne
 	@JsonSummary
@@ -54,6 +55,12 @@ public class SpecOptionConditionalRelation extends BaseEntity {
 	protected Object[] hashCodeFields() {
 
 		return new Object[] { primary, conditionalCharacteristics };
+	}
+
+	@Override
+	public Object getKey() {
+
+		return primary;
 	}
 
 }
