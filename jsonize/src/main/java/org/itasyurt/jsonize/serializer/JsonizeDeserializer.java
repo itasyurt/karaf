@@ -23,7 +23,7 @@ public class JsonizeDeserializer {
 
 	private static final String CLASS_NAME = "@class";
 
-	private JsonAnnotationProcessor annotationProcessor = new JsonAnnotationProcessor();
+	private JsonTreeFactory factory = new JsonTreeFactoryImpl();
 
 	private AdapterRegistry adapterRegistry = new DefaultAdapterRegistry();
 
@@ -31,7 +31,7 @@ public class JsonizeDeserializer {
 
 	public <T> T convertFromJson(Class<T> clazz, Map<String, Object> jsonMap) {
 
-		JsonTree tree = annotationProcessor.getDetailedJsonTree(clazz);
+		JsonTree tree = factory.getJsonTree(clazz);
 
 		T result = createNewInstance(clazz);
 
@@ -127,7 +127,7 @@ public class JsonizeDeserializer {
 		ParameterizedType genericType = (ParameterizedType) currentNode.getField().getGenericType();
 		Class type = (Class) genericType.getActualTypeArguments()[0];
 		List listObject = (List) currentJsonObject;
-		Collection resultCollection = currentNode.isList()?new ArrayList(): new HashSet();
+		Collection resultCollection = currentNode.isList() ? new ArrayList() : new HashSet();
 		for (Object objEntry : listObject) {
 			if (isPrimitive(type)) {
 				Object objectValue = getAdapterRegistry().getTypeAdapter(objEntry.getClass()).convertToObject((String) objEntry);
@@ -225,5 +225,15 @@ public class JsonizeDeserializer {
 	protected ObjectRepository getRepository() {
 		return repository;
 	}
+
+	public JsonTreeFactory getFactory() {
+		return factory;
+	}
+
+	public void setFactory(JsonTreeFactory factory) {
+		this.factory = factory;
+	}
+	
+	
 
 }

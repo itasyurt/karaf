@@ -16,11 +16,11 @@ import org.itasyurt.jsonize.anottationprocessor.JsonTree;
 import org.itasyurt.jsonize.anottationprocessor.JsonizePrimitives;
 
 public class JsonizeSerializer {
-	
+
 	private static final String CLASS_NAME = "@class";
-	
-	private  JsonAnnotationProcessor annotationProcessor = new  JsonAnnotationProcessor();
-	
+
+	private JsonTreeFactory jsonTreeFactory = new JsonTreeFactoryImpl();
+
 	private AdapterRegistry adapterRegistry = new DefaultAdapterRegistry();
 
 	public Map<String, Object> convertToDetailedJson(Object obj) {
@@ -37,23 +37,21 @@ public class JsonizeSerializer {
 
 	}
 
-	private JsonTree getDetailedJsonTree(Class<? extends Object> class1) {
-		
-		
-		return annotationProcessor.getDetailedJsonTree(class1);
+	private JsonTree getDetailedJsonTree(Class<? extends Object> clazz) {
+
+		return jsonTreeFactory.getJsonTree(clazz);
 	}
-	
 
 	private Object convertToJson(JsonTree tree, Object obj) {
 
 		List<JsonTree> children = tree.getChildren();
 		if (children.isEmpty()) {
-			if(JsonizePrimitives.isPrimitive(obj.getClass())) {
+			if (JsonizePrimitives.isPrimitive(obj.getClass())) {
 				return getAdapterRegistry().getTypeAdapter(obj.getClass()).convertToString(obj);
-			}else {
+			} else {
 				return obj;
 			}
-		
+
 		} else {
 			Map<String, Object> result = new HashMap<String, Object>();
 			if (isSubtype(obj.getClass())) {
@@ -69,7 +67,7 @@ public class JsonizeSerializer {
 	}
 
 	private void convertChildToJson(Object obj, Map<String, Object> result, JsonTree child) {
-		
+
 		try {
 			if (child.isCollection()) {
 				convertCollectionToJson(obj, result, child);
@@ -132,7 +130,7 @@ public class JsonizeSerializer {
 
 		}
 	}
-	
+
 	public static boolean isSubtype(Class clazz) {
 
 		return clazz.getAnnotation(JsonSubtype.class) != null;
@@ -145,9 +143,15 @@ public class JsonizeSerializer {
 	public void setAdapterRegistry(AdapterRegistry adapterRegistry) {
 		this.adapterRegistry = adapterRegistry;
 	}
-	
 
-	
+	public JsonTreeFactory getJsonTreeFactory() {
+		return jsonTreeFactory;
+	}
 
+	public void setJsonTreeFactory(JsonTreeFactory jsonTreeFactory) {
+		this.jsonTreeFactory = jsonTreeFactory;
+	}
+	
+	
 
 }
