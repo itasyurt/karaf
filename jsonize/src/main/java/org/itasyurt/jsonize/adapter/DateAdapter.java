@@ -16,9 +16,9 @@ public class DateAdapter extends AbstractTypeAdapter<Date> {
 	}
 
 	@Override
-	public String convertToString(Date obj) {
+	public String convertToString(Object obj) {
 
-		return "" + obj.getTime();
+		return "" + ((Date)obj).getTime();
 	}
 
 }

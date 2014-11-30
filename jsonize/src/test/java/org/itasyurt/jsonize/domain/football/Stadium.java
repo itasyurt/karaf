@@ -7,6 +7,11 @@ public class Stadium extends BaseEntity {
 
 	@JsonSummary
 	private City city;
+	
+	@JsonSummary 
+	private StadiumStatus status;
+	
+	
 	@JsonDetail
 	private Address address;
 
@@ -41,5 +46,15 @@ public class Stadium extends BaseEntity {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	public StadiumStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(StadiumStatus status) {
+		this.status = status;
+	}
+	
+	
 
 }

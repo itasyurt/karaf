@@ -20,11 +20,11 @@ import org.itasyurt.jsonize.adapter.StringAdapter;
 public class DefaultAdapterRegistry implements AdapterRegistry {
 
 	@SuppressWarnings("rawtypes")
-	Map<Class, AbstractTypeAdapter> adapterMap= new HashMap<Class, AbstractTypeAdapter>();
-	
+	Map<Class, AbstractTypeAdapter> adapterMap = new HashMap<Class, AbstractTypeAdapter>();
+
 	public DefaultAdapterRegistry() {
 		putAdapter(BigDecimal.class, new BigDecimalAdapter());
-		putAdapter(Boolean.class, new BooleanAdapter ());
+		putAdapter(Boolean.class, new BooleanAdapter());
 		putAdapter(Character.class, new CharacterAdapter());
 		putAdapter(Date.class, new DateAdapter());
 		putAdapter(Double.class, new DoubleAdapter());
@@ -33,15 +33,23 @@ public class DefaultAdapterRegistry implements AdapterRegistry {
 		putAdapter(Long.class, new LongAdapter());
 		putAdapter(Short.class, new ShortAdapter());
 		putAdapter(String.class, new StringAdapter());
-		
-		
+
 	}
+
 	@SuppressWarnings("unchecked")
 	public <T> AbstractTypeAdapter<T> getTypeAdapter(Class<T> clazz) {
-		
-		return adapterMap.get(clazz);
+
+		AbstractTypeAdapter result = adapterMap.get(clazz);
+		if (result == null) {
+
+			if (Enum.class.isAssignableFrom(clazz)) {
+				return (AbstractTypeAdapter<T>) new EnumAdapter((Class<Enum>) clazz);
+			}
+
+		}
+		return result;
 	}
-	
+
 	private <T> void putAdapter(Class<T> clazz, AbstractTypeAdapter<T> adapter) {
 		adapterMap.put(clazz, adapter);
 	}

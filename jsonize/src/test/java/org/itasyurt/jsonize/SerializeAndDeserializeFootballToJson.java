@@ -13,10 +13,13 @@ import org.itasyurt.jsonize.domain.football.Country;
 import org.itasyurt.jsonize.domain.football.FootballObjectRepository;
 import org.itasyurt.jsonize.domain.football.GoalInfo;
 import org.itasyurt.jsonize.domain.football.GoalKeeper;
+import org.itasyurt.jsonize.domain.football.GoalType;
 import org.itasyurt.jsonize.domain.football.Match;
 import org.itasyurt.jsonize.domain.football.MatchScore;
+import org.itasyurt.jsonize.domain.football.MatchType;
 import org.itasyurt.jsonize.domain.football.Person;
 import org.itasyurt.jsonize.domain.football.Stadium;
+import org.itasyurt.jsonize.domain.football.StadiumStatus;
 import org.itasyurt.jsonize.domain.football.Tournament;
 import org.itasyurt.jsonize.domain.football.TransferList;
 import org.itasyurt.jsonize.serializer.JsonizeDeserializer;
@@ -78,6 +81,27 @@ public class SerializeAndDeserializeFootballToJson {
 		deserializer.setRepository(repository);
 
 		TransferList deserialized = deserializer.convertFromJson(TransferList.class, fromJson);
+
+		System.out.println(deserialized.getName());
+
+	}
+
+	@Test
+	public void serializeAndDeserializeEnums() {
+		createDomainObjects();
+		Match m = repository.find(Match.class, "elclassico");
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonizeSerializer serializer = new JsonizeSerializer();
+		Map<String, Object> converted = serializer.convertToDetailedJson(m);
+
+		String jsonString = gson.toJson(converted);
+		Map fromJson = gson.fromJson(jsonString, Map.class);
+		System.out.println(fromJson);
+		JsonizeDeserializer deserializer = new JsonizeDeserializer();
+		deserializer.setRepository(repository);
+
+		Match deserialized = deserializer.convertFromJson(Match.class, fromJson);
 
 		System.out.println(deserialized.getName());
 
@@ -162,23 +186,24 @@ public class SerializeAndDeserializeFootballToJson {
 
 		City johannesburg = createCity("name", "name", southAfrica);
 		repository.put(johannesburg);
-		Stadium soccerCity = createStadium("soccerCity", "soccerCity", johannesburg);
+		Stadium soccerCity = createStadium("soccerCity", "soccerCity", johannesburg, StadiumStatus.INTERNATIONAL);
 		repository.put(soccerCity);
 
 		MatchScore score = new MatchScore();
-		score.getHomeGoalInfo().add(createGoalInfo(messi, 36));
-		score.getHomeGoalInfo().add(createGoalInfo(messi, 73));
-		score.getAwayGoalInfo().add(createGoalInfo(ronaldo, 51));
+		score.getHomeGoalInfo().add(createGoalInfo(messi, 36, GoalType.HEADER));
+		score.getHomeGoalInfo().add(createGoalInfo(messi, 73, GoalType.LEFT_FOOT));
+		score.getAwayGoalInfo().add(createGoalInfo(ronaldo, 51, GoalType.HEADER));
 
-		Match match = createMatch("elclassico", new Date(), soccerCity, barcelona, realMadrid, score);
+		Match match = createMatch("elclassico", new Date(), soccerCity, barcelona, realMadrid, score, MatchType.FRIENDLY);
 		repository.put(match);
 
 	}
 
-	private GoalInfo createGoalInfo(Person player, int minute) {
+	private GoalInfo createGoalInfo(Person player, int minute, GoalType goalType) {
 		GoalInfo result = new GoalInfo();
 		result.setPlayer(player);
 		result.setMinute(minute);
+		result.setGoalType(goalType);
 		return result;
 
 	}
@@ -191,15 +216,16 @@ public class SerializeAndDeserializeFootballToJson {
 		return result;
 	}
 
-	private Stadium createStadium(String id, String name, City city) {
+	private Stadium createStadium(String id, String name, City city, StadiumStatus status) {
 		Stadium result = new Stadium();
 		result.setId(id);
 		result.setName(name);
 		result.setCity(city);
+		result.setStatus(status);
 		return result;
 	}
 
-	private Match createMatch(String id, Date matchDate, Stadium stadium, Club homeTeam, Club awayTeam, MatchScore score) {
+	private Match createMatch(String id, Date matchDate, Stadium stadium, Club homeTeam, Club awayTeam, MatchScore score, MatchType matchType) {
 		Match match = new Match();
 		match.setId(id);
 		match.setMatchDate(matchDate);
@@ -207,6 +233,7 @@ public class SerializeAndDeserializeFootballToJson {
 		match.setHomeTeam(homeTeam);
 		match.setAwayTeam(awayTeam);
 		match.setScore(score);
+		match.setMatchType(matchType);
 
 		return match;
 	}

@@ -8,19 +8,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.itasyurt.jsonize.adapter.registry.AdapterRegistry;
+import org.itasyurt.jsonize.adapter.registry.DefaultAdapterRegistry;
 import org.itasyurt.jsonize.annotations.JsonSubtype;
 import org.itasyurt.jsonize.anottationprocessor.JsonAnnotationProcessor;
 import org.itasyurt.jsonize.anottationprocessor.JsonTree;
+import org.itasyurt.jsonize.anottationprocessor.JsonizePrimitives;
 
 public class JsonizeSerializer {
 	
 	private static final String CLASS_NAME = "@class";
 	
 	private  JsonAnnotationProcessor annotationProcessor = new  JsonAnnotationProcessor();
-
 	
+	private AdapterRegistry adapterRegistry = new DefaultAdapterRegistry();
 
-	
 	public Map<String, Object> convertToDetailedJson(Object obj) {
 
 		JsonTree tree = getDetailedJsonTree(obj.getClass());
@@ -46,7 +48,12 @@ public class JsonizeSerializer {
 
 		List<JsonTree> children = tree.getChildren();
 		if (children.isEmpty()) {
-			return obj;
+			if(JsonizePrimitives.isPrimitive(obj.getClass())) {
+				return getAdapterRegistry().getTypeAdapter(obj.getClass()).convertToString(obj);
+			}else {
+				return obj;
+			}
+		
 		} else {
 			Map<String, Object> result = new HashMap<String, Object>();
 			if (isSubtype(obj.getClass())) {
@@ -129,6 +136,14 @@ public class JsonizeSerializer {
 	public static boolean isSubtype(Class clazz) {
 
 		return clazz.getAnnotation(JsonSubtype.class) != null;
+	}
+
+	protected AdapterRegistry getAdapterRegistry() {
+		return adapterRegistry;
+	}
+
+	public void setAdapterRegistry(AdapterRegistry adapterRegistry) {
+		this.adapterRegistry = adapterRegistry;
 	}
 	
 

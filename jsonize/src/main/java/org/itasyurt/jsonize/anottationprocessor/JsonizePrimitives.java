@@ -1,8 +1,9 @@
 package org.itasyurt.jsonize.anottationprocessor;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class JsonizePrimitives {
@@ -24,11 +25,18 @@ public class JsonizePrimitives {
 		wrapperTypes.add(Date.class);
 		wrapperTypes.add(BigDecimal.class);
 	}
-	
+
 	public static boolean isPrimitive(Class clazz) {
 
-		return wrapperTypes.contains(clazz);
+		Class current = clazz;
+		while (current != null) {
+			if (wrapperTypes.contains(current)) {
+				return true;
+			}
+			current = current.getSuperclass();
+
+		}
+		return false;
 	}
-	
-	
+
 }

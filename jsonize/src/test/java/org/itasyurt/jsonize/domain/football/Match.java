@@ -18,6 +18,8 @@ public class Match extends BaseEntity {
 	private Stadium stadium;
 	@JsonDetail
 	private MatchScore score;
+	@JsonSummary
+	private MatchType matchType;
 
 	public Date getMatchDate() {
 		return matchDate;
@@ -57,6 +59,14 @@ public class Match extends BaseEntity {
 
 	public void setScore(MatchScore score) {
 		this.score = score;
+	}
+
+	public MatchType getMatchType() {
+		return matchType;
+	}
+
+	public void setMatchType(MatchType matchType) {
+		this.matchType = matchType;
 	}
 
 }

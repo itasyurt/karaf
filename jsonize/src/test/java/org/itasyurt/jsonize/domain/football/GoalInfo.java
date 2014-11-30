@@ -8,6 +8,10 @@ public class GoalInfo {
 	private  Person player;
 	@JsonSummary
 	private Integer minute;
+	
+	@JsonSummary
+	private GoalType goalType;
+	
 	public Person getPlayer() {
 		return player;
 	}
@@ -19,6 +23,12 @@ public class GoalInfo {
 	}
 	public void setMinute(Integer minute) {
 		this.minute = minute;
+	}
+	public GoalType getGoalType() {
+		return goalType;
+	}
+	public void setGoalType(GoalType goalType) {
+		this.goalType = goalType;
 	}
 	
 }
