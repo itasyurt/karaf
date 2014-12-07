@@ -79,25 +79,7 @@
 	</bean>
 
 
-	<jaxrs:server id="testCxfServer" address="/">
-		<jaxrs:serviceBeans>
-			<ref bean="acsService" />
-			<ref bean="conditionalCharSpecService"/>
-			<ref bean="combinedCharSpecService"/>
-		</jaxrs:serviceBeans>
-		<jaxrs:extensionMappings>
-			<entry key="json" value="application/json" />
-		</jaxrs:extensionMappings>
-		<jaxrs:features>
-			<cxf:logging />
-		</jaxrs:features>
-		<jaxrs:providers>
-		   <ref bean="karafEntityProvider" />
-			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
-		</jaxrs:providers>
-	</jaxrs:server>
 	
-	<bean id="karafEntityProvider" class="org.itasyurt.karaf.json.provider.KarafEntityProvider"></bean>
 
 
 

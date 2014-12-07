@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.itasyurt.karaf.dao.DataCreationUtils;
 import org.itasyurt.karaf.dao.characteristic.specification.atomic.SelectionCharacteristicSpecificationDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.CombinedCharacteristicSpecification;
+import org.itasyurt.karaf.util.DataCreationUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

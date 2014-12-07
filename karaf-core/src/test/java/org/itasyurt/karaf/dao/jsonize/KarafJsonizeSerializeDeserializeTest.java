@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.itasyurt.jsonize.serializer.JsonizeDeserializer;
 import org.itasyurt.jsonize.serializer.JsonizeSerializer;
-import org.itasyurt.karaf.dao.DataCreationUtils;
 import org.itasyurt.karaf.dao.common.CommonDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.AtomicCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.BooleanCharacteristicSpecification;
@@ -16,6 +15,7 @@ import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.CombinedCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.conditional.ConditionalCharacteristicSpecification;
 import org.itasyurt.karaf.jsonize.JsonKarafRepository;
+import org.itasyurt.karaf.util.DataCreationUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

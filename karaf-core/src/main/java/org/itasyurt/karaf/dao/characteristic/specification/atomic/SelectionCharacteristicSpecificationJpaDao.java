@@ -7,6 +7,7 @@ import javax.persistence.criteria.Root;
 
 import org.itasyurt.karaf.dao.FetchUtils;
 import org.itasyurt.karaf.dao.common.BaseJpaDao;
+import org.itasyurt.karaf.dao.common.VersionedEntityJpaDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCharacteristicSpecification_;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
@@ -14,7 +15,7 @@ import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption_
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SelectionCharacteristicSpecificationJpaDao extends BaseJpaDao<SelectionCharacteristicSpecification> implements SelectionCharacteristicSpecificationDao {
+public class SelectionCharacteristicSpecificationJpaDao extends VersionedEntityJpaDao<SelectionCharacteristicSpecification> implements SelectionCharacteristicSpecificationDao {
 
 	@Override
 	protected Root<SelectionCharacteristicSpecification> constructDeepRoot(CriteriaQuery<SelectionCharacteristicSpecification> c) {

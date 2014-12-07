@@ -32,6 +32,9 @@ public class JsonizeSerializer {
 		for (JsonTree child : children) {
 			convertChildToJson(obj, result, child);
 		}
+		if (isSubtype(obj.getClass())) {
+			result.put(CLASS_NAME, obj.getClass().getName());
+		}
 
 		return result;
 

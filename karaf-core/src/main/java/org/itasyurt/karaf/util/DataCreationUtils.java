@@ -1,4 +1,4 @@
-package org.itasyurt.karaf.dao;
+package org.itasyurt.karaf.util;
 
 import java.util.List;
 import java.util.Map;

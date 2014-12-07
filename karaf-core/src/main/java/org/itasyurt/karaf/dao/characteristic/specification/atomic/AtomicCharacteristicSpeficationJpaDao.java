@@ -5,12 +5,13 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.itasyurt.karaf.dao.common.BaseJpaDao;
+import org.itasyurt.karaf.dao.common.VersionedEntityJpaDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.AtomicCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.AtomicCharacteristicSpecification_;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AtomicCharacteristicSpeficationJpaDao extends BaseJpaDao<AtomicCharacteristicSpecification> implements AtomicCharacteristicSpecificationDao {
+public class AtomicCharacteristicSpeficationJpaDao extends VersionedEntityJpaDao<AtomicCharacteristicSpecification> implements AtomicCharacteristicSpecificationDao {
 
 	@Override
 	protected Root<AtomicCharacteristicSpecification> constructDeepRoot(CriteriaQuery<AtomicCharacteristicSpecification> c) {

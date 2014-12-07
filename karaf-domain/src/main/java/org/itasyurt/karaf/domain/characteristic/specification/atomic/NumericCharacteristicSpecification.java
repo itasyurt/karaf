@@ -2,12 +2,14 @@ package org.itasyurt.karaf.domain.characteristic.specification.atomic;
 
 import java.math.BigDecimal;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import org.itasyurt.jsonize.annotations.JsonDetail;
 import org.itasyurt.jsonize.annotations.JsonSubtype;
 
 @Entity
+@DiscriminatorValue("NCS")
 @JsonSubtype
 public class NumericCharacteristicSpecification  extends AtomicCharacteristicSpecification{
 

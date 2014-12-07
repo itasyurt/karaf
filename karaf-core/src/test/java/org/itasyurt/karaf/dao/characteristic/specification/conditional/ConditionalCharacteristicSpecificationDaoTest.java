@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.itasyurt.karaf.dao.DataCreationUtils;
 import org.itasyurt.karaf.dao.characteristic.specification.atomic.AtomicCharacteristicSpecificationDao;
 import org.itasyurt.karaf.dao.characteristic.specification.atomic.SelectionCharacteristicSpecificationDao;
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.AtomicCharacteristicSpecification;
@@ -14,6 +13,7 @@ import org.itasyurt.karaf.domain.characteristic.specification.atomic.SelectionCh
 import org.itasyurt.karaf.domain.characteristic.specification.atomic.SpecOption;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.CombinedCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.conditional.ConditionalCharacteristicSpecification;
+import org.itasyurt.karaf.util.DataCreationUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,6 +7,7 @@ import javax.persistence.criteria.Root;
 
 import org.itasyurt.karaf.dao.FetchUtils;
 import org.itasyurt.karaf.dao.common.BaseJpaDao;
+import org.itasyurt.karaf.dao.common.VersionedEntityJpaDao;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.CombinedCharacteristicSpecification;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.CombinedCharacteristicSpecification_;
 import org.itasyurt.karaf.domain.characteristic.specification.combined.SpecOptionCombinedRelation;
@@ -16,7 +17,7 @@ import org.itasyurt.karaf.domain.characteristic.specification.combined.SpecOptio
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CombinedCharacteristicSpecificationJpaDao extends BaseJpaDao<CombinedCharacteristicSpecification> implements CombinedCharacteristicSpecificationDao {
+public class CombinedCharacteristicSpecificationJpaDao extends VersionedEntityJpaDao<CombinedCharacteristicSpecification> implements CombinedCharacteristicSpecificationDao {
 
 	@Override
 	protected Root<CombinedCharacteristicSpecification> constructDeepRoot(CriteriaQuery<CombinedCharacteristicSpecification> c) {
